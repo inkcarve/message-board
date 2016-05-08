@@ -106,7 +106,6 @@ _react2.default.createElement(
     _reactRouter.Route,
     { path: "/", component: App },
     _react2.default.createElement(_reactRouter.IndexRoute, { component: _AppHandler2.default }),
-    _react2.default.createElement(_reactRouter.IndexRoute, { component: Home }),
     _react2.default.createElement(_reactRouter.Route, { path: "about", component: About })
   )
 );

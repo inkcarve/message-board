@@ -53,7 +53,6 @@ export default (
   <Router history={browserHistory}>
   <Route path="/" component={App}>
     <IndexRoute component={AppHandler}></IndexRoute>
-    <IndexRoute component={Home}></IndexRoute>
     <Route path="about" component={About}></Route>
   </Route>
   </Router>

@@ -33,7 +33,7 @@ var AppHandler = function (_React$Component) {
       return _react2.default.createElement(
         "h1",
         null,
-        "Hello App Component , load-hot"
+        "Hello App Component , load-hot !!"
       );
     }
   }]);
