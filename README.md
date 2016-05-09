@@ -33,6 +33,5 @@ npm start
 ```
 ###### 將會執行package.json 裡面 scripts 的 start
 
-暫時將 server 放在src/server/server.js
-網址 127.0.0.1:3000
+暫時將 server 放在src/server/server.js，網址 127.0.0.1:3000
 
