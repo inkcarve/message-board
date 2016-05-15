@@ -1,6 +1,3 @@
-//import { Route } from "react-router";
-import React from "react";
-
 import { Router, Route, Link, browserHistory, IndexRoute ,DefaultRoute,RouteHandler} from 'react-router';
 
 //createClass could not hot-load
