@@ -12,6 +12,10 @@ var _AppHandler = require("./components/AppHandler.jsx");
 
 var _AppHandler2 = _interopRequireDefault(_AppHandler);
 
+var _MessageBox = require("./components/MessageBox.jsx");
+
+var _MessageBox2 = _interopRequireDefault(_MessageBox);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -24,10 +28,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var App = React.createClass({
   displayName: "App",
   render: function render() {
+
+    //console.log(this)
     return React.createElement(
       "div",
       { className: "container" },
-      this.props.children,
+      React.createElement(
+        "div",
+        null,
+        React.createElement(
+          _reactRouter.Link,
+          { to: "/" },
+          "Home"
+        )
+      ),
       React.createElement(
         "div",
         null,
@@ -36,7 +50,17 @@ var App = React.createClass({
           { to: "/about" },
           "About"
         )
-      )
+      ),
+      React.createElement(
+        "div",
+        null,
+        React.createElement(
+          _reactRouter.Link,
+          { to: "/message" },
+          "Message"
+        )
+      ),
+      this.props.children
     );
   }
 });
@@ -52,7 +76,6 @@ var Home = React.createClass({
 });
 
 //create class and extends
-//extends Component could be hot-load
 
 var About = function (_React$Component) {
   _inherits(About, _React$Component);
@@ -67,9 +90,18 @@ var About = function (_React$Component) {
     key: "render",
     value: function render() {
       return React.createElement(
-        "h2",
+        "div",
         null,
-        "About"
+        React.createElement(
+          "h2",
+          null,
+          "About"
+        ),
+        React.createElement(
+          "p",
+          null,
+          "Nothing..."
+        )
       );
     }
   }]);
@@ -78,6 +110,10 @@ var About = function (_React$Component) {
 }(React.Component);
 
 ;
+
+//import extends Component could be hot-load
+//file of Router couldn't hotupdate
+
 
 /* method 1 : by router config
 const routesConfig = {
@@ -101,6 +137,7 @@ React.createElement(
     _reactRouter.Route,
     { path: "/", component: App },
     React.createElement(_reactRouter.IndexRoute, { component: _AppHandler2.default }),
-    React.createElement(_reactRouter.Route, { path: "about", component: About })
+    React.createElement(_reactRouter.Route, { path: "about", component: About }),
+    React.createElement(_reactRouter.Route, { path: "message", component: _MessageBox2.default })
   )
 );

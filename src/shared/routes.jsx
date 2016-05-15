@@ -1,12 +1,19 @@
 import { Router, Route, Link, browserHistory, IndexRoute ,DefaultRoute,RouteHandler} from 'react-router';
 
+
+
 //createClass could not hot-load
 const App = React.createClass({
+
 render(){
+  
+//console.log(this) 
 	return (
   <div className="container">
-  {this.props.children}
+  <div><Link to="/">Home</Link></div>
   <div><Link to="/about">About</Link></div>
+  <div><Link to="/message">Message</Link></div>
+  {this.props.children}
   </div>
   );
   }
@@ -20,17 +27,22 @@ render(){
 });
 
 //create class and extends
-//extends Component could be hot-load
 class About extends React.Component{
 render(){
   return (
-  <h2>About</h2>
+    <div>
+      <h2>About</h2>
+      <p>Nothing...</p>
+    </div>
   );
   }
 };
 
-import AppHandler from "./components/AppHandler.jsx";
 
+//import extends Component could be hot-load
+//file of Router couldn't hotupdate
+import AppHandler from "./components/AppHandler.jsx";
+import MessageBox from "./components/MessageBox.jsx";
 
 /* method 1 : by router config
 const routesConfig = {
@@ -51,6 +63,7 @@ export default (
   <Route path="/" component={App}>
     <IndexRoute component={AppHandler}></IndexRoute>
     <Route path="about" component={About}></Route>
+    <Route path="message" component={MessageBox}></Route>
   </Route>
   </Router>
 );
