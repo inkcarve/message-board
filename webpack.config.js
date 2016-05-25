@@ -28,7 +28,7 @@ module.exports = {
         extensions: ['', '.js'],
     },
     externals: {
-     //load some libary from public CDN outside , and need add <script src=""> to HTML
+        //load some libary from public CDN outside , and need add <script src=""> to HTML
     },
     module: {
         noParse: ['jquery', 'bootstrap-sass', "react"],
@@ -43,21 +43,47 @@ module.exports = {
                 loader: 'babel-loader',
                 //include: path.join(__dirname, './vendor/')
             }, {
+                test: /\.json$/,
+                loader: 'json'
+            },
+            // other loaders 
+            {
                 test: /\.scss$/,
                 loader: 'style!css!sass?sourceMap'
-                    //ExtractTextPlugin.extract(
-                    //      'style!css!sass?sourceMap'
-                    //)
-            },
-            { test: require.resolve('react-dom'), loader: 'expose?ReactDOM' },
-            { test: require.resolve('react'), loader: 'expose?React' },
-            { test: require.resolve('jquery'), loader: 'expose?jQuery' },
-            { test: /\.eot(\?\S*)?$/, loader: 'url-loader?limit=100000&mimetype=application/vnd.ms-fontobject' },
-            { test: /\.woff2(\?\S*)?$/, loader: 'url-loader?limit=100000&mimetype=application/font-woff2' },
-            { test: /\.woff(\?\S*)?$/, loader: 'url-loader?limit=100000&mimetype=application/font-woff' },
-            { test: /\.ttf(\?\S*)?$/, loader: 'url-loader?limit=100000&mimetype=application/font-ttf' },
-            { test: /\.(svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" },
-            { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' } // inline base64 URLs for <=8k images, direct URLs for the rest
+                //ExtractTextPlugin.extract(
+                //      'style!css!sass?sourceMap'
+                //)
+            }, {
+                test: require.resolve('react-dom'),
+                loader: 'expose?ReactDOM'
+            }, {
+                test: require.resolve('react'),
+                loader: 'expose?React'
+            }, {
+                test: require.resolve('jquery'),
+                loader: 'expose?jQuery'
+            }, {
+                test: require.resolve('jquery'),
+                loader: 'expose?$'
+            }, {
+                test: /\.eot(\?\S*)?$/,
+                loader: 'url-loader?limit=100000&mimetype=application/vnd.ms-fontobject'
+            }, {
+                test: /\.woff2(\?\S*)?$/,
+                loader: 'url-loader?limit=100000&mimetype=application/font-woff2'
+            }, {
+                test: /\.woff(\?\S*)?$/,
+                loader: 'url-loader?limit=100000&mimetype=application/font-woff'
+            }, {
+                test: /\.ttf(\?\S*)?$/,
+                loader: 'url-loader?limit=100000&mimetype=application/font-ttf'
+            }, {
+                test: /\.(svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: "file-loader"
+            }, {
+                test: /\.(png|jpg)$/,
+                loader: 'url-loader?limit=8192'
+            } // inline base64 URLs for <=8k images, direct URLs for the rest
 
         ],
         query: {
