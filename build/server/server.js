@@ -76,17 +76,33 @@ router.post('/api/message.json', function (req, res) {
 	});
 });
 
-// send all requests to index.html so browserHistory in React Router works
-router.get('/', function (request, response) {
-	response.sendFile(_path2.default.resolve(__dirname, '../../views/', 'index.html'));
-});
-router.get('/about', function (request, response) {
-	response.sendFile(_path2.default.resolve(__dirname, '../../views/', 'index.html'));
-});
-router.get('/message', function (request, response) {
-	response.sendFile(_path2.default.resolve(__dirname, '../../views/', 'index.html'));
+router.get('/*', function (req, res) {
+	console.log(req.originalUrl);
+	if (req.originalUrl.search('api') == -1) {
+		res.sendFile(_path2.default.resolve(__dirname, '../../views/', 'index.html'));
+	} else {
+		_fs2.default.readFile(message_JSON, function (err, data) {
+			if (err) {
+				console.error(err);
+				process.exit(1);
+			}
+			res.json(JSON.parse(data));
+		});
+	}
 });
 
+// send all requests to index.html so browserHistory in React Router works
+/*
+router.get('/', function(request, response) {
+	response.sendFile(path.resolve(__dirname, '../../views/', 'index.html'))
+})
+router.get('/about', function(request, response) {
+	response.sendFile(path.resolve(__dirname, '../../views/', 'index.html'))
+})
+router.get('/message', function(request, response) {
+	response.sendFile(path.resolve(__dirname, '../../views/', 'index.html'))
+})
+*/
 app.use('/', router);
 
 var server = app.listen(3000, "127.0.0.1", function () {
