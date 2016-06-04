@@ -8,6 +8,7 @@ npm update
 ```
 "devDependencies": {
     "babel": "^6.5.2",
+    "babel-cli": "^6.9.0",
     "babel-core": "^6.7.7",
     "babel-loader": "^6.2.4",
     "babel-preset-es2015": "^6.6.0",
@@ -21,6 +22,7 @@ npm update
     "express": "^4.13.4",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
+    "jquery": "^2.2.4",
     "json-loader": "^0.5.4",
     "node-libs-browser": "^1.0.0",
     "node-sass": "^3.7.0",
@@ -35,13 +37,16 @@ npm update
     "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {
+    "chokidar": "^1.5.1",
+    "concurrently": "^2.1.0",
     "nodemon": "^1.9.2"
-  }
 ```
   
 ## 2. 測試
 ```
 npm start
+或
+npm run current
 ```
 ###### 將會執行package.json 裡面 scripts 的 start
 暫時將 server 放在src/server/server.js，網址 127.0.0.1:3000
