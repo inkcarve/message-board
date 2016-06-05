@@ -1,86 +1,113 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _message = require("../../../message.json");
+var _message = require('../../../message.json');
 
 var _message2 = _interopRequireDefault(_message);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 // import data , then update when change by hot-loader
-
+//import RenewData from './RenewData.js';
 var url_message = "/api/message.json";
+var url_delete = '/api/message/delete';
+var MessageItem = React.createClass({
+  displayName: 'MessageItem',
 
-var MessageItem = function (_React$Component) {
-  _inherits(MessageItem, _React$Component);
+  delete: function _delete(data) {
+    var comment = {};
+    comment.id = data.id;
+    console.log(comment);
 
-  function MessageItem() {
-    _classCallCheck(this, MessageItem);
+    $.ajax({
+      url: url_delete,
+      dataType: 'json',
+      type: 'POST',
+      data: comment,
+      success: function (data) {
+        //this.setState({data: data});
+        console.log(data);
+        if (data) {
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(MessageItem).apply(this, arguments));
-  }
+          //this.setState({data:data});
+          this.props.setList(data);
+        }
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
 
-  _createClass(MessageItem, [{
-    key: "render",
-    value: function render() {
-      return React.createElement(
-        "div",
-        { className: "row" },
+  render: function render() {
+    var _this = this;
+
+    return React.createElement(
+      'div',
+      { className: 'row' },
+      React.createElement(
+        'div',
+        { className: 'col-md-3' },
         React.createElement(
-          "div",
-          { className: "col-md-3" },
-          React.createElement(
-            "h4",
-            null,
-            this.props.data.author
-          ),
-          " "
-        ),
-        React.createElement(
-          "div",
-          { className: "col-md-9" },
-          React.createElement(
-            "p",
-            null,
-            this.props.data.text
-          )
+          'h4',
+          null,
+          this.props.data.author
         )
-      );
-    }
-  }]);
-
-  return MessageItem;
-}(React.Component);
-
-;
-
+      ),
+      React.createElement(
+        'div',
+        { className: 'col-md-6' },
+        React.createElement(
+          'p',
+          null,
+          this.props.data.text
+        )
+      ),
+      React.createElement(
+        'div',
+        { className: 'col-md-3' },
+        React.createElement(
+          'button',
+          { className: 'btn btn-default', onClick: function onClick() {
+              _this.delete(_this.props.data);
+            } },
+          'Delete !'
+        )
+      )
+    );
+  }
+});
+//let data = RenewData.renew();
 var MessageList = React.createClass({
-  displayName: "MessageList",
+  displayName: 'MessageList',
+
 
   componentWillMount: function componentWillMount() {
     this.setState({ data: _message2.default });
     //this.loadMessage();
     //setInterval(this.loadMessage,2000);
   },
+  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+    this.setState({ data: _message2.default });
+    //this.setState({
+    //likesIncreasing: nextProps.likeCount > this.props.likeCount
+    //});
+  },
+  setList: function setList(list) {
+    this.setState({ data: list });
+  },
+
   render: function render() {
-    console.log(this.props.data);
+    console.log(this.props);
     var messages = this.state.data.map(function (data) {
-      return React.createElement(MessageItem, { key: data.id, data: data });
-    });
+      return React.createElement(MessageItem, { key: data.id, data: data, setList: this.setList });
+    }.bind(this));
     return React.createElement(
-      "div",
-      { className: "message_list" },
+      'div',
+      { className: 'message_list' },
       messages
     );
   }

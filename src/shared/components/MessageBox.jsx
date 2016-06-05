@@ -3,77 +3,6 @@ import data from '../../../message.json'
 
 const url_message="/api/message.json";
 
-class MessageItem extends React.Component {
-  render() {
-    return ( < div className = "row" >
-      < div className = "col-md-3" >
-      <h4>{this.props.data.author}</h4> < /div>
-        <div className="col-md-9">
-          <p>{this.props.data.text}</p >
-      < /div>
-      </div >
-    );
-  }
-};
-
-const MessageList = React.createClass({
-  render: function() {
-    console.log(this.props.data);
-    const messages = this.props.data.map(function(data) {
-      return (
-        <MessageItem key={data.id} data={data}>
-      </MessageItem>
-      );
-    })
-    return (
-      <div className="message_list">
-      {messages}
-      </div>
-    );
-  }
-});
-
-const MessageForm = React.createClass({
-  getInitialState: function() {
-    return {author: '', text: ''};
-  },
-  handleAuthorChange: function(e) {
-    this.setState({author: e.target.value});
-  },
-  handleTextChange: function(e) {
-    this.setState({text: e.target.value});
-  },
-  handleSubmit: function(e) {
-    e.preventDefault();
-    var author = this.state.author.trim();
-    var text = this.state.text.trim();
-    if (!text || !author) {
-      return;
-    }
-    this.props.onMessageSubmit({author: author, text: text});
-    this.setState({author: '', text: ''});
-  },
-  render: function() {
-    return (
-      <form className="messageForm" onSubmit={this.handleSubmit}>
-        <input
-          type="text"
-          placeholder="Your name"
-          value={this.state.author}
-          onChange={this.handleAuthorChange}
-        />
-        <input
-          type="text"
-          placeholder="Say something..."
-          value={this.state.text}
-          onChange={this.handleTextChange}
-        />
-        <input type="submit" value="Post" />
-      </form>
-    );
-  }
-});
-
 const MessageBox = React.createClass({
   /*
   loadMessage: function() {
@@ -127,6 +56,7 @@ const MessageBox = React.createClass({
     //setInterval(this.loadMessage,2000);
   },
   render:function(){
+    console.log(this);
     return (
       <div className="message_box">
       {this.props.children}

@@ -19,7 +19,7 @@ var server = new _webpackDevServer2.default((0, _webpack2.default)(_webpack4.def
   publicPath: _webpack4.default.output.publicPath,
   stats: { colors: true },
   hot: true,
-  noInfo: false,
+  noInfo: true,
   historyApiFallback: true
 }); // Webpack dev server
 // Ran in parallel with the Express server

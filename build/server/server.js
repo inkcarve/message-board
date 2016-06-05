@@ -50,6 +50,32 @@ router.get('/api/message.json', function (req, res) {
 	});
 });
 
+router.post('/api/message/delete', function (req, res) {
+	_fs2.default.readFile(message_JSON, function (err, data) {
+		if (err) {
+			console.error(err);
+			process.exit(1);
+		}
+		var comments = JSON.parse(data);
+
+		var id = parseInt(req.body.id);
+		var newData = [];
+
+		for (var i = 0; i < comments.length; i++) {
+			if (id !== comments[i].id) {
+				newData.push(comments[i]);
+			}
+		};
+		_fs2.default.writeFile(message_JSON, JSON.stringify(newData, null, 4), function (err) {
+			if (err) {
+				console.error(err);
+				process.exit(1);
+			}
+			res.json(newData);
+		});
+	});
+});
+
 router.post('/api/message.json', function (req, res) {
 	_fs2.default.readFile(message_JSON, function (err, data) {
 		if (err) {

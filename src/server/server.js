@@ -34,17 +34,44 @@ router.get('/api/message.json', function(req, res) {
 	});
 });
 
+router.post('/api/message/delete', function(req, res) {
+	fs.readFile(message_JSON, function(err, data) {
+		if (err) {
+			console.error(err);
+			process.exit(1);
+		}
+		let comments = JSON.parse(data);
+		
+		let id = parseInt(req.body.id);
+		let newData = [];
+
+		for(let i=0 ;i<comments.length;i++){
+			if(id!==comments[i].id){
+				newData.push(comments[i]);
+			}
+		};
+		fs.writeFile(message_JSON, JSON.stringify(newData, null, 4), function(err) {
+			if (err) {
+				console.error(err);
+				process.exit(1);
+			}
+			res.json(newData);
+		});
+
+	});
+});
+
 router.post('/api/message.json', function(req, res) {
 	fs.readFile(message_JSON, function(err, data) {
 		if (err) {
 			console.error(err);
 			process.exit(1);
 		}
-		var comments = JSON.parse(data);
+		let comments = JSON.parse(data);
 		// NOTE: In a real implementation, we would likely rely on a database or
 		// some other approach (e.g. UUIDs) to ensure a globally unique id. We'll
 		// treat Date.now() as unique-enough for our purposes.
-		var newComment = {
+		let newComment = {
 			id: Date.now(),
 			author: req.body.author,
 			text: req.body.text,

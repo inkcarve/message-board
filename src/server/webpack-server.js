@@ -10,7 +10,7 @@ var server = new WebpackDevServer(webpack(config), {
   publicPath: config.output.publicPath,
   stats: { colors: true },
   hot: true,
-  noInfo: false,
+  noInfo: true,
   historyApiFallback: true
 });
 server.listen(8080, "127.0.0.1", function(err, result) {

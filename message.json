@@ -1,10 +1,5 @@
 [
     {
-        "id": 1388534400000,
-        "author": "Pete Hunt",
-        "text": "Hey there!"
-    },
-    {
         "id": 1420070400000,
         "author": "Paul O’Shannessy",
         "text": "React is *great*!"
@@ -15,43 +10,23 @@
         "text": "Say..."
     },
     {
-        "id": 1463910560808,
-        "author": "XX",
-        "text": "XX"
-    },
-    {
-        "id": 1463910610498,
-        "author": "adwe",
-        "text": "aefew"
-    },
-    {
-        "id": 1463910647614,
-        "author": "aed",
-        "text": "aed"
-    },
-    {
-        "id": 1463910700172,
-        "author": "ee",
-        "text": "ee"
-    },
-    {
-        "id": 1463911377636,
-        "author": "aed",
-        "text": "aewd"
-    },
-    {
-        "id": 1464430329789,
-        "author": "sa",
-        "text": "sa"
-    },
-    {
-        "id": 1464430367364,
-        "author": "ppp",
-        "text": "ppp"
-    },
-    {
         "id": 1464430826782,
         "author": "we",
         "text": "we"
+    },
+    {
+        "id": 1465111193505,
+        "author": "ajeio",
+        "text": "ajoejoieaoifjaefjo"
+    },
+    {
+        "id": 1465123761271,
+        "author": "dd",
+        "text": "dd"
+    },
+    {
+        "id": 1465134267127,
+        "author": "as",
+        "text": "as"
     }
 ]
