@@ -5,6 +5,9 @@ import bodyParser from "body-parser";
 const message_JSON = path.join(__dirname, '../../message.json')
 const app = express();
 const router = express.Router();
+const server_port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+const server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+const vendor_port = process.env.OPENSHIFT_NODEJS_PORT || 8000;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -117,7 +120,7 @@ router.get('/message', function(request, response) {
 */
 app.use('/', router);
 
-var server = app.listen(3000, "127.0.0.1", function() {
+var server = app.listen(server_port, server_ip_address, function() {
 
 	var host = server.address().address;
 	var port = server.address().port;
@@ -130,7 +133,7 @@ var server = app.listen(3000, "127.0.0.1", function() {
 //vendor
 const vendor = express();
 vendor.use(express.static(path.join(__dirname, '../../vendor/')));
-var server_vender = vendor.listen(8000, "127.0.0.1", function() {
+var server_vender = vendor.listen(vendor_port, server_ip_address, function() {
 
 	var host = server_vender.address().address;
 	var port = server_vender.address().port;

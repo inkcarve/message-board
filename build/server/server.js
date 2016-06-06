@@ -21,6 +21,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var message_JSON = _path2.default.join(__dirname, '../../message.json');
 var app = (0, _express2.default)();
 var router = _express2.default.Router();
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+var vendor_port = process.env.OPENSHIFT_NODEJS_PORT || 8000;
 
 app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({
@@ -131,7 +134,7 @@ router.get('/message', function(request, response) {
 */
 app.use('/', router);
 
-var server = app.listen(3000, "127.0.0.1", function () {
+var server = app.listen(server_port, server_ip_address, function () {
 
 	var host = server.address().address;
 	var port = server.address().port;
@@ -142,7 +145,7 @@ var server = app.listen(3000, "127.0.0.1", function () {
 //vendor
 var vendor = (0, _express2.default)();
 vendor.use(_express2.default.static(_path2.default.join(__dirname, '../../vendor/')));
-var server_vender = vendor.listen(8000, "127.0.0.1", function () {
+var server_vender = vendor.listen(vendor_port, server_ip_address, function () {
 
 	var host = server_vender.address().address;
 	var port = server_vender.address().port;
