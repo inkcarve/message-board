@@ -11,7 +11,7 @@ render(){
   <nav className="navbar navbar-default">
   <div className="container">
     <div className="navbar-header">
-      <a className="navbar-brand" href="/">Message</a>
+      <a className="navbar-brand" href="/">M<span>.</span>to<span>.</span>Me</a>
     </div>
     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul className="nav navbar-nav">
@@ -50,7 +50,8 @@ render(){
   return (
     <div>
       <h2>About</h2>
-      <p>Nothing...</p>
+      <h3>React + Babel + Webpack + ...</h3>
+      <p>Practice of Learning New Skill.</p>
     </div>
   );
   }

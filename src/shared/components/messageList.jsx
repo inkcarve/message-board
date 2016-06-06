@@ -32,16 +32,12 @@ const MessageItem = React.createClass ({
   
   render() {
     return ( 
-      < div className = "row" >
-        < div className = "col-md-3" >
-          <h4>{this.props.data.author}</h4>
-        < /div>
-        <div className="col-md-6">
+      <div className="col-md-4 col-sm-6">
+      <div className="post-block">
+          <h4>{this.props.data.author}:</h4>
           <p>{this.props.data.text}</p >
-        < /div>
-        <div  className="col-md-3">
           <button className="btn btn-default" onClick={() => {this.delete(this.props.data)}}>Delete !</button>
-        </div>
+          </div>
       </div >
     );
   }
@@ -74,7 +70,9 @@ const MessageList = React.createClass({
     }.bind(this))
     return (
       <div className="message_list">
+      <div className = "row" >
       {messages}
+      </div>
       </div>
     );
   }

@@ -52,7 +52,19 @@ var App = React.createClass({
             React.createElement(
               "a",
               { className: "navbar-brand", href: "/" },
-              "Message"
+              "M",
+              React.createElement(
+                "span",
+                null,
+                "."
+              ),
+              "to",
+              React.createElement(
+                "span",
+                null,
+                "."
+              ),
+              "Me"
             )
           ),
           React.createElement(
@@ -118,9 +130,14 @@ var About = function (_React$Component) {
           "About"
         ),
         React.createElement(
+          "h3",
+          null,
+          "React + Babel + Webpack + ..."
+        ),
+        React.createElement(
           "p",
           null,
-          "Nothing..."
+          "Practice of Learning New Skill."
         )
       );
     }

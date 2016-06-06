@@ -74,21 +74,42 @@ var MessageForm = React.createClass({
   render: function render() {
     console.log(this);
     return React.createElement(
-      'form',
-      { className: 'messageForm', onSubmit: this.handleSubmit },
-      React.createElement('input', {
-        type: 'text',
-        placeholder: 'Your name',
-        value: this.state.author,
-        onChange: this.handleAuthorChange
-      }),
-      React.createElement('input', {
-        type: 'text',
-        placeholder: 'Say something...',
-        value: this.state.text,
-        onChange: this.handleTextChange
-      }),
-      React.createElement('input', { type: 'submit', value: 'Post' })
+      'div',
+      { className: 'row' },
+      React.createElement(
+        'div',
+        { className: 'col-md-6' },
+        React.createElement(
+          'form',
+          { className: 'messageForm', onSubmit: this.handleSubmit },
+          React.createElement(
+            'div',
+            { className: 'form-group' },
+            React.createElement('input', {
+              type: 'text',
+              className: 'form-control',
+              placeholder: 'Your name',
+              value: this.state.author,
+              onChange: this.handleAuthorChange,
+              required: true
+            })
+          ),
+          React.createElement(
+            'div',
+            { className: 'form-group' },
+            React.createElement('textarea', {
+              type: 'text',
+              className: 'form-control',
+              placeholder: 'Say something...',
+              value: this.state.text,
+              onChange: this.handleTextChange,
+              rows: '5',
+              required: true
+            })
+          ),
+          React.createElement('input', { type: 'submit', value: 'Post !', className: 'btn btn-default' })
+        )
+      )
     );
   }
 });

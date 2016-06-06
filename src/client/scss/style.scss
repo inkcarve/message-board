@@ -1,4 +1,40 @@
 $bootstrap-sass-asset-helper: true;
 @import 'bootstrap-sass/assets/stylesheets/_bootstrap.scss';
 @import 'import.scss';
-h1 {color:#777;}
+
+/* color */
+$main_red:#FA5858;
+$main_red_deep:#DF3C3C;
+$main_blue:#2E9AFE;
+$main_blue_deep:#0080FF;
+$p_color:#777;
+
+h1,h2,h3,h4,h5,h6 {color:$main_red;}
+p{color:$p_color;}
+
+/* Logo */
+.navbar-default{
+	.navbar-brand{
+		color:$main_red;
+		&:hover,&:focus{color:$main_red_deep;}
+
+		span{
+		color:$main_blue;
+		&:hover,&:focus{color:$main_blue_deep;}
+		}
+	}
+}
+
+/* message list */
+.post-block {
+    border: 1px solid #ddd;
+    padding: 26px;
+    h4 {
+    color: $main_red;
+}
+    p {
+    background: #eee;
+    padding: 16px;
+    color: $p_color;
+}
+}

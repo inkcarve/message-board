@@ -47,28 +47,21 @@ var MessageItem = React.createClass({
 
     return React.createElement(
       'div',
-      { className: 'row' },
+      { className: 'col-md-4 col-sm-6' },
       React.createElement(
         'div',
-        { className: 'col-md-3' },
+        { className: 'post-block' },
         React.createElement(
           'h4',
           null,
-          this.props.data.author
-        )
-      ),
-      React.createElement(
-        'div',
-        { className: 'col-md-6' },
+          this.props.data.author,
+          ':'
+        ),
         React.createElement(
           'p',
           null,
           this.props.data.text
-        )
-      ),
-      React.createElement(
-        'div',
-        { className: 'col-md-3' },
+        ),
         React.createElement(
           'button',
           { className: 'btn btn-default', onClick: function onClick() {
@@ -108,7 +101,11 @@ var MessageList = React.createClass({
     return React.createElement(
       'div',
       { className: 'message_list' },
-      messages
+      React.createElement(
+        'div',
+        { className: 'row' },
+        messages
+      )
     );
   }
 });

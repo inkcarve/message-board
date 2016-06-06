@@ -57,21 +57,35 @@ const MessageForm = React.createClass({
   render: function() {
     console.log(this)
     return (
+      <div className="row">
+      <div className="col-md-6">
       <form className="messageForm" onSubmit={this.handleSubmit}>
+      <div className="form-group">
         <input
           type="text"
+          className="form-control"
           placeholder="Your name"
           value={this.state.author}
           onChange={this.handleAuthorChange}
+          required
         />
-        <input
+      </div>
+      <div className="form-group">
+        <textarea
           type="text"
+          className="form-control"
           placeholder="Say something..."
           value={this.state.text}
           onChange={this.handleTextChange}
-        />
-        <input type="submit" value="Post" />
+          rows="5"
+          required
+        ></textarea>
+      </div>
+        <input type="submit" value="Post !" className="btn btn-default"/>
       </form>
+      </div>
+      </div>
+      
     );
   }
 });
