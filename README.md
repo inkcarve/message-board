@@ -1,4 +1,5 @@
 # message-board
+<img src="screenshot/message-board-1.PNG">
 ## 1. 安裝
 安裝 package.json 裡的 npm package
 ```
@@ -47,7 +48,7 @@ npm update
 ```
 npm start
 或
-npm run current
+npm run current(無法分辨&符號的command line用這個)
 ```
 ###### 將會執行package.json 裡面 scripts 的 start
 暫時將 server 放在src/server/server.js，網址 127.0.0.1:3000
