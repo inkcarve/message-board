@@ -30,6 +30,7 @@ npm update
     "react-dom": "^15.0.2",
     "react-hot-loader": "^1.3.0",
     "react-router": "^2.4.0",
+    "redux": "^3.5.2",
     "sass-loader": "^3.2.0",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
