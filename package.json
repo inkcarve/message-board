@@ -16,6 +16,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+  },
+  "dependencies": {
+    "chokidar": "^1.5.1",
+    "concurrently": "^2.1.0",
+    "nodemon": "^1.9.2",
     "babel": "^6.5.2",
     "babel-cli": "^6.9.0",
     "babel-core": "^6.7.7",
@@ -46,11 +51,6 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1"
-  },
-  "dependencies": {
-    "chokidar": "^1.5.1",
-    "concurrently": "^2.1.0",
-    "nodemon": "^1.9.2"
   },
   "repository": {
     "type": "git",
