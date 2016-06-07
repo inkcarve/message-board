@@ -29,7 +29,7 @@ var AppHandler = function (_React$Component) {
       return React.createElement(
         "h1",
         null,
-        "Message Board demo"
+        "Message Board demo !!"
       );
     }
   }]);

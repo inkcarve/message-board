@@ -25,6 +25,15 @@ p{color:$p_color;}
 	}
 }
 
+/* about */
+.about{
+	.sub_title{
+		span{
+			color:$main_blue;
+		}
+	}
+}
+
 /* message list */
 .post-block {
     border: 1px solid #ddd;

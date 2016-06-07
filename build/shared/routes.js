@@ -123,7 +123,7 @@ var About = function (_React$Component) {
     value: function render() {
       return React.createElement(
         "div",
-        null,
+        { className: "about" },
         React.createElement(
           "h2",
           null,
@@ -131,8 +131,26 @@ var About = function (_React$Component) {
         ),
         React.createElement(
           "h3",
-          null,
-          "React + Babel + Webpack + ..."
+          { className: "sub_title" },
+          "React ",
+          React.createElement(
+            "span",
+            null,
+            "+"
+          ),
+          " Babel ",
+          React.createElement(
+            "span",
+            null,
+            "+"
+          ),
+          " Webpack ",
+          React.createElement(
+            "span",
+            null,
+            "+"
+          ),
+          " ..."
         ),
         React.createElement(
           "p",

@@ -48,9 +48,9 @@ const NavLink = React.createClass({
 class About extends React.Component{
 render(){
   return (
-    <div>
+    <div className="about">
       <h2>About</h2>
-      <h3>React + Babel + Webpack + ...</h3>
+      <h3 className="sub_title">React <span>+</span> Babel <span>+</span> Webpack <span>+</span> ...</h3>
       <p>Practice of Learning New Skill.</p>
     </div>
   );
