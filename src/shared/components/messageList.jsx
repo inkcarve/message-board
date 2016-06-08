@@ -1,6 +1,4 @@
-import data from '../../../message.json'
-// import data , then update when change by hot-loader
-//import RenewData from './RenewData.js';
+import RenewData from './RenewData.js';
 const url_message = "/api/message.json";
 const url_delete = '/api/message/delete';
 const MessageItem = React.createClass ({
@@ -15,11 +13,8 @@ const MessageItem = React.createClass ({
       type: 'POST',
       data: comment,
       success: function(data) {
-        //this.setState({data: data});
         console.log(data);
         if(data){
-
-          //this.setState({data:data});
           this.props.setList(data);
         }
       }.bind(this),
@@ -42,20 +37,16 @@ const MessageItem = React.createClass ({
     );
   }
 });
-//let data = RenewData.renew();
+
 const MessageList = React.createClass({
  
   componentWillMount:function() {
+    let data = RenewData.data;
     this.setState({data:data})
     //this.loadMessage();
     //setInterval(this.loadMessage,2000);
+    console.log('componentWillMount')
   },
-  componentWillReceiveProps: function(nextProps) {
-    this.setState({data:data})
-  //this.setState({
-    //likesIncreasing: nextProps.likeCount > this.props.likeCount
-  //});
-},
     setList:function(list){
     this.setState({data:list});
   },
@@ -85,8 +76,6 @@ default MessageList;
 export
 default class MessageBox extends React.Component {
   render() {
-    //this.loadMessage();
-
     return (
       <div className="message_box">
       <MessageList url="/api/message.json"/>

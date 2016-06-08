@@ -121,18 +121,7 @@ app.use(require('webpack-dev-middleware')(complier, {
     log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000
 }));
 
-// send all requests to index.html so browserHistory in React Router works
-/*
-router.get('/', function(request, response) {
-	response.sendFile(path.resolve(__dirname, '../../views/', 'index.html'))
-})
-router.get('/about', function(request, response) {
-	response.sendFile(path.resolve(__dirname, '../../views/', 'index.html'))
-})
-router.get('/message', function(request, response) {
-	response.sendFile(path.resolve(__dirname, '../../views/', 'index.html'))
-})
-*/
+
 app.use('/', router);
 
 var server = app.listen(server_port, server_ip_address, function() {

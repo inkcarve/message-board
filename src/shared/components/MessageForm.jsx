@@ -21,7 +21,7 @@ const MessageForm = React.createClass({
       success: function(data) {
         //this.setState({data: data});
         RenewData.renew(data);
-        //this.context.router.push('/message');
+        this.context.router.push('/message');
       }.bind(this),
       error: function(xhr, status, err) {
         this.setState({data: comments});

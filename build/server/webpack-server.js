@@ -14,7 +14,7 @@ var _webpack4 = _interopRequireDefault(_webpack3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080; // Webpack dev server
+var server_port = process.env.OPENSHIFT_NODEJS_PORT + 1 || 8080; // Webpack dev server
 // Ran in parallel with the Express server
 
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';

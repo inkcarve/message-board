@@ -22,15 +22,11 @@ var RenewData = function () {
   }
 
   _createClass(RenewData, [{
-    key: 'getData',
-    value: function getData() {
-      return this.data;
-    }
-  }, {
     key: 'renew',
     value: function renew(newData) {
       if (newData !== undefined) this.data = newData;
-      return _message2.default;
+      console.log(this.data);
+      return this.data;
     }
   }]);
 
