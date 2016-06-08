@@ -24,6 +24,10 @@ var _MessageForm = require("./components/MessageForm.jsx");
 
 var _MessageForm2 = _interopRequireDefault(_MessageForm);
 
+var _RenewData = require("./components/RenewData.js");
+
+var _RenewData2 = _interopRequireDefault(_RenewData);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -36,7 +40,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var App = React.createClass({
   displayName: "App",
   render: function render() {
-    console.log(this);
     return React.createElement(
       "div",
       null,
@@ -93,7 +96,6 @@ var App = React.createClass({
 var NavLink = React.createClass({
   displayName: "NavLink",
   render: function render() {
-    console.log(this);
     var data = this.props.data;
     return React.createElement(
       "li",
@@ -168,29 +170,6 @@ var About = function (_React$Component) {
 
 //import extends Component could be hot-load
 //file of Router couldn't hotupdate
-
-/* method 1 : by router config
-const routesConfig = {
-  path: '/',
-  component: App,
-  indexRoute: { component: AppHandler },
-  childRoutes: [
-    { path: 'about', component: About },
-  ]
-  }
-  export default (<Router history={browserHistory} routes={routesConfig}>
-  </Router>);
-  */
-//import RenewData from './components/RenewData.js';
-function createList(c, props) {
-  console.log(c);
-
-  var data = {};
-  data.test = 'test';
-
-  // 确保传入了所有的 props！
-  return React.createElement(_MessageList2.default, { Component: c, data: data });
-}
 exports.default =
 // method 2: by react router
 React.createElement(
