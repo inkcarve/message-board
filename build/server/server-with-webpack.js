@@ -35,7 +35,7 @@ var app = (0, _express2.default)();
 var router = _express2.default.Router();
 var server_port = process.env.NODE_PORT || 8080;
 var server_ip_address = process.env.NODE_IP || '127.0.0.1';
-var vendor_port = process.env.NODE_PORT || 8000;
+//const vendor_port = process.env.NODE_PORT || 8000;
 
 var complier = (0, _webpack2.default)(_devWebpackOneport2.default);
 
@@ -146,7 +146,7 @@ app.use(require("webpack-hot-middleware")(complier, {
 }));
 
 app.use('/', router);
-
+app.use(_express2.default.static(_path2.default.join(__dirname, '../../vendor/')));
 var server = app.listen(server_port, server_ip_address, function () {
 
 	var host = server.address().address;
@@ -156,12 +156,15 @@ var server = app.listen(server_port, server_ip_address, function () {
 });
 
 //vendor
-var vendor = (0, _express2.default)();
-vendor.use(_express2.default.static(_path2.default.join(__dirname, '../../vendor/')));
-var server_vender = vendor.listen(vendor_port, server_ip_address, function () {
+/*
+const vendor = express();
+vendor.use(express.static(path.join(__dirname, '../../vendor/')));
+var server_vender = vendor.listen(vendor_port, server_ip_address, function() {
 
 	var host = server_vender.address().address;
 	var port = server_vender.address().port;
 
 	console.log('Example app listening at http://%s:%s', host, port);
+
 });
+*/

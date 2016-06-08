@@ -7,7 +7,7 @@ const app = express();
 const router = express.Router();
 const server_port = process.env.NODE_PORT || 8080;
 const server_ip_address = process.env.NODE_IP || '127.0.0.1';
-const vendor_port = process.env.NODE_PORT || 8000;
+//const vendor_port = process.env.NODE_PORT || 8000;
 import WebpackDevServer from "webpack-dev-server";
 import webpack from "webpack";
 import config from "../../dev-webpack-oneport.config";
@@ -123,7 +123,7 @@ app.use(require('webpack-dev-middleware')(complier, {
 
 
 app.use('/', router);
-
+app.use(express.static(path.join(__dirname, '../../vendor/')));
 var server = app.listen(server_port, server_ip_address, function() {
 
 	var host = server.address().address;
@@ -135,6 +135,7 @@ var server = app.listen(server_port, server_ip_address, function() {
 
 
 //vendor
+/*
 const vendor = express();
 vendor.use(express.static(path.join(__dirname, '../../vendor/')));
 var server_vender = vendor.listen(vendor_port, server_ip_address, function() {
@@ -145,3 +146,4 @@ var server_vender = vendor.listen(vendor_port, server_ip_address, function() {
 	console.log('Example app listening at http://%s:%s', host, port);
 
 });
+*/
