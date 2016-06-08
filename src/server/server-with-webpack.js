@@ -5,9 +5,9 @@ import bodyParser from "body-parser";
 const message_JSON = path.join(__dirname, '../../message.json')
 const app = express();
 const router = express.Router();
-const server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
-const server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
-const vendor_port = process.env.OPENSHIFT_NODEJS_PORT || 8000;
+const server_port = process.env.NODE_PORT || 8080;
+const server_ip_address = process.env.NODE_IP || '127.0.0.1';
+const vendor_port = process.env.NODE_PORT || 8000;
 import WebpackDevServer from "webpack-dev-server";
 import webpack from "webpack";
 import config from "../../dev-webpack-oneport.config";

@@ -12,7 +12,7 @@
     "dev-server": "node build/server/webpack-server",
     "current": "concurrently \"npm run watch-js\" \"npm run dev-server\" \"npm run server\"",
     "current-oneport": "concurrently \"npm run watch-js\" \"npm run server-oneport\"",
-    "start": "npm run current",
+    "start": "npm run current-oneport",
     "build": "npm run clean && babel src -d build"
   },
   "author": {
@@ -29,7 +29,6 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-2": "^6.5.0",
     "body-parser": "^1.15.1",
-    "bootstrap": "^3.3.6",
     "bootstrap-sass": "^3.3.6",
     "chokidar": "^1.5.1",
     "concurrently": "^2.1.0",
