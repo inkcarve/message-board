@@ -1,6 +1,7 @@
+<img src="screenshot/message-board-2.PNG">
 # message-board
 #### [測試連結(放在openshift)](http://mtome-vincentlin.rhcloud.com/)
-<img src="screenshot/message-board-2.PNG">
+#
 ## 1. 安裝
 安裝 package.json 裡的 npm package
 ```sh
