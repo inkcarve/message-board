@@ -13,7 +13,7 @@
     "dev-server": "node build/server/webpack-server",
     "current": "concurrently \"npm run watch-js\" \"npm run dev-server\" \"npm run server\"",
     "current-oneport": "concurrently \"npm run watch-js\" \"npm run server-oneport\"",
-    "start": "node build/server/server-with-webpack.js",
+    "start": "node build/server/server-openshift.js",
     "build": "npm run clean && babel src -d build"
   },
   "author": {
