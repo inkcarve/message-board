@@ -2,6 +2,7 @@
   "name": "message-board",
   "version": "0.0.1",
   "description": "",
+  "private": true,
   "main": "server-with-webpack.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,7 +13,7 @@
     "dev-server": "node build/server/webpack-server",
     "current": "concurrently \"npm run watch-js\" \"npm run dev-server\" \"npm run server\"",
     "current-oneport": "concurrently \"npm run watch-js\" \"npm run server-oneport\"",
-    "start": "npm run current-oneport",
+    "start": "node build/server/server-with-webpack.js",
     "build": "npm run clean && babel src -d build"
   },
   "author": {

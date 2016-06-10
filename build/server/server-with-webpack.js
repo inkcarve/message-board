@@ -33,8 +33,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var message_JSON = _path2.default.join(__dirname, '../../message.json');
 var app = (0, _express2.default)();
 var router = _express2.default.Router();
-var server_port = process.env.NODE_PORT || 8080;
-var server_ip_address = process.env.NODE_IP || '127.0.0.1';
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 //const vendor_port = process.env.NODE_PORT || 8000;
 
 var complier = (0, _webpack2.default)(_devWebpackOneport2.default);
@@ -141,12 +141,15 @@ app.use(require('webpack-dev-middleware')(complier, {
 	noInfo: true,
 	historyApiFallback: true
 }));
-app.use(require("webpack-hot-middleware")(complier, {
-	log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000
+/*
+ app.use(require("webpack-hot-middleware")(complier, {
+    log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000
 }));
+*/
 
 app.use('/', router);
 app.use(_express2.default.static(_path2.default.join(__dirname, '../../vendor/')));
+//app.use(express.static(path.join(__dirname, '../view/')));
 var server = app.listen(server_port, server_ip_address, function () {
 
 	var host = server.address().address;
