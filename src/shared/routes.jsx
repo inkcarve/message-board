@@ -1,4 +1,9 @@
 import { Router, Route, Link, isActive, browserHistory, IndexRoute ,DefaultRoute, RouteHandler} from 'react-router';
+const socket = io.connect();
+
+socket.on('socket', function(data){
+  console.log(data);
+});
 
 //createClass could not hot-load
 const App = React.createClass({
@@ -8,6 +13,7 @@ render(){
   <nav className="navbar navbar-default">
   <div className="container">
     <div className="navbar-header">
+    <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span className="sr-only">Toggle navigation</span> <span className="icon-bar"></span> <span className="icon-bar"></span> <span className="icon-bar"></span> </button>
       <a className="navbar-brand" href="/">M<span>.</span>to<span>.</span>Me</a>
     </div>
     <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

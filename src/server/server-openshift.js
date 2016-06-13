@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import fs from 'fs';
 import bodyParser from "body-parser";
+import io from "socket.io";
 const message_JSON = path.join(__dirname, '../../message.json')
 const app = express();
 const router = express.Router();
@@ -136,6 +137,42 @@ var server = app.listen(server_port, server_ip_address, function() {
 	console.log('Example app listening at http://%s:%s', host, port);
 
 });
+
+var serv_io = io.listen(server);
+
+serv_io.sockets.on('connection', function(socket) {
+    socket.emit('socket', 'socket connect');
+
+    socket.on('add_message', function(new_data) {
+	fs.readFile(message_JSON, function(err, data) {
+		if (err) {
+			console.error(err);
+			process.exit(1);
+		}
+		let comments = JSON.parse(data);
+		// NOTE: In a real implementation, we would likely rely on a database or
+		// some other approach (e.g. UUIDs) to ensure a globally unique id. We'll
+		// treat Date.now() as unique-enough for our purposes.
+		let newComment = {
+			id: Date.now(),
+			author: new_data.author,
+			text: new_data.text,
+		};
+		comments.push(newComment);
+		fs.writeFile(message_JSON, JSON.stringify(comments, null, 4), function(err) {
+			if (err) {
+				console.error(err);
+				process.exit(1);
+			}
+			socket.emit('update_message', comments);
+			socket.emit('return_add', '200');
+		});
+	});
+    
+});
+});
+
+
 
 
 //vendor

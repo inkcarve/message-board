@@ -2,6 +2,7 @@ import express from "express";
 import path from "path";
 import fs from 'fs';
 import bodyParser from "body-parser";
+import io from "socket.io";
 const message_JSON = path.join(__dirname, '../../message.json')
 const app = express();
 const router = express.Router();
@@ -127,6 +128,11 @@ var server = app.listen(server_port, server_ip_address, function() {
 
 	console.log('Example app listening at http://%s:%s', host, port);
 
+});
+
+var serv_io = io.listen(server);
+serv_io.sockets.on('connection', function(socket) {
+    socket.emit('socket', 'socket connect');
 });
 
 

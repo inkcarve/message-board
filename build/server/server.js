@@ -16,6 +16,10 @@ var _bodyParser = require("body-parser");
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
+var _socket = require("socket.io");
+
+var _socket2 = _interopRequireDefault(_socket);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var message_JSON = _path2.default.join(__dirname, '../../message.json');
@@ -140,6 +144,11 @@ var server = app.listen(server_port, server_ip_address, function () {
 	var port = server.address().port;
 
 	console.log('Example app listening at http://%s:%s', host, port);
+});
+
+var serv_io = _socket2.default.listen(server);
+serv_io.sockets.on('connection', function (socket) {
+	socket.emit('socket', 'socket connect');
 });
 
 //vendor

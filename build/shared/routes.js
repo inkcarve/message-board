@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -6,25 +6,25 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _reactRouter = require("react-router");
+var _reactRouter = require('react-router');
 
-var _Home = require("./components/Home.jsx");
+var _Home = require('./components/Home.jsx');
 
 var _Home2 = _interopRequireDefault(_Home);
 
-var _MessageBox = require("./components/MessageBox.jsx");
+var _MessageBox = require('./components/MessageBox.jsx');
 
 var _MessageBox2 = _interopRequireDefault(_MessageBox);
 
-var _MessageList = require("./components/MessageList.jsx");
+var _MessageList = require('./components/MessageList.jsx');
 
 var _MessageList2 = _interopRequireDefault(_MessageList);
 
-var _MessageForm = require("./components/MessageForm.jsx");
+var _MessageForm = require('./components/MessageForm.jsx');
 
 var _MessageForm2 = _interopRequireDefault(_MessageForm);
 
-var _RenewData = require("./components/RenewData.js");
+var _RenewData = require('./components/RenewData.js');
 
 var _RenewData2 = _interopRequireDefault(_RenewData);
 
@@ -36,46 +36,69 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var socket = io.connect();
+
+socket.on('socket', function (data) {
+  console.log(data);
+});
+
 //createClass could not hot-load
 var App = React.createClass({
-  displayName: "App",
+  displayName: 'App',
   render: function render() {
     return React.createElement(
-      "div",
+      'div',
       null,
       React.createElement(
-        "nav",
-        { className: "navbar navbar-default" },
+        'nav',
+        { className: 'navbar navbar-default' },
         React.createElement(
-          "div",
-          { className: "container" },
+          'div',
+          { className: 'container' },
           React.createElement(
-            "div",
-            { className: "navbar-header" },
+            'div',
+            { className: 'navbar-header' },
             React.createElement(
-              "a",
-              { className: "navbar-brand", href: "/" },
-              "M",
+              'button',
+              { type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '#bs-example-navbar-collapse-1', 'aria-expanded': 'false' },
+              ' ',
               React.createElement(
-                "span",
-                null,
-                "."
+                'span',
+                { className: 'sr-only' },
+                'Toggle navigation'
               ),
-              "to",
+              ' ',
+              React.createElement('span', { className: 'icon-bar' }),
+              ' ',
+              React.createElement('span', { className: 'icon-bar' }),
+              ' ',
+              React.createElement('span', { className: 'icon-bar' }),
+              ' '
+            ),
+            React.createElement(
+              'a',
+              { className: 'navbar-brand', href: '/' },
+              'M',
               React.createElement(
-                "span",
+                'span',
                 null,
-                "."
+                '.'
               ),
-              "Me"
+              'to',
+              React.createElement(
+                'span',
+                null,
+                '.'
+              ),
+              'Me'
             )
           ),
           React.createElement(
-            "div",
-            { className: "collapse navbar-collapse", id: "bs-example-navbar-collapse-1" },
+            'div',
+            { className: 'collapse navbar-collapse', id: 'bs-example-navbar-collapse-1' },
             React.createElement(
-              "ul",
-              { className: "nav navbar-nav" },
+              'ul',
+              { className: 'nav navbar-nav' },
               React.createElement(NavLink, { data: { title: 'Home', path: "/", pathnow: this.props.location.pathname } }),
               React.createElement(NavLink, { data: { title: 'About', path: "/about", pathnow: this.props.location.pathname } }),
               React.createElement(NavLink, { data: { title: 'Message List', path: "/message", pathnow: this.props.location.pathname } }),
@@ -85,8 +108,8 @@ var App = React.createClass({
         )
       ),
       React.createElement(
-        "div",
-        { className: "container" },
+        'div',
+        { className: 'container' },
         this.props.children
       )
     );
@@ -94,11 +117,11 @@ var App = React.createClass({
 });
 
 var NavLink = React.createClass({
-  displayName: "NavLink",
+  displayName: 'NavLink',
   render: function render() {
     var data = this.props.data;
     return React.createElement(
-      "li",
+      'li',
       { className: data.path == data.pathnow ? 'active' : '' },
       React.createElement(
         _reactRouter.Link,
@@ -121,43 +144,43 @@ var About = function (_React$Component) {
   }
 
   _createClass(About, [{
-    key: "render",
+    key: 'render',
     value: function render() {
       return React.createElement(
-        "div",
-        { className: "about" },
+        'div',
+        { className: 'about' },
         React.createElement(
-          "h2",
+          'h2',
           null,
-          "About"
+          'About'
         ),
         React.createElement(
-          "h3",
-          { className: "sub_title" },
-          "React ",
+          'h3',
+          { className: 'sub_title' },
+          'React ',
           React.createElement(
-            "span",
+            'span',
             null,
-            "+"
+            '+'
           ),
-          " Babel ",
+          ' Babel ',
           React.createElement(
-            "span",
+            'span',
             null,
-            "+"
+            '+'
           ),
-          " Webpack ",
+          ' Webpack ',
           React.createElement(
-            "span",
+            'span',
             null,
-            "+"
+            '+'
           ),
-          " ..."
+          ' ...'
         ),
         React.createElement(
-          "p",
+          'p',
           null,
-          "Practice of Learning New Skill."
+          'Practice of Learning New Skill.'
         )
       );
     }
@@ -177,14 +200,14 @@ React.createElement(
   { history: _reactRouter.browserHistory },
   React.createElement(
     _reactRouter.Route,
-    { path: "/", component: App },
+    { path: '/', component: App },
     React.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
-    React.createElement(_reactRouter.Route, { path: "about", component: About }),
+    React.createElement(_reactRouter.Route, { path: 'about', component: About }),
     React.createElement(
       _reactRouter.Route,
-      { path: "message", component: _MessageBox2.default },
+      { path: 'message', component: _MessageBox2.default },
       React.createElement(_reactRouter.IndexRoute, { component: _MessageList2.default }),
-      React.createElement(_reactRouter.Route, { path: "write", component: _MessageForm2.default })
+      React.createElement(_reactRouter.Route, { path: 'write', component: _MessageForm2.default })
     )
   )
 );
