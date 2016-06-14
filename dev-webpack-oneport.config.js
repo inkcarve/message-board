@@ -73,9 +73,6 @@ module.exports = {
                 test: require.resolve('jquery'),
                 loader: 'expose?jQuery'
             }, {
-                test: require.resolve('jquery'),
-                loader: 'expose?$'
-            }, {
                 test: require.resolve('socket.io-client'),
                 loader: 'expose?io'
             }, {

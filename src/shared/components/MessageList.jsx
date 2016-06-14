@@ -1,28 +1,11 @@
 import RenewData from './RenewData.js';
+import socket from './Socket.js';
 const url_message = "/api/message.json";
 const url_delete = '/api/message/delete';
+//const socket = io.connect();
 const MessageItem = React.createClass ({
    delete: function(data) {
-    let comment = {};
-    comment.id = data.id;
-    console.log(comment);
-
-    $.ajax({
-      url: url_delete,
-      dataType: 'json',
-      type: 'POST',
-      data: comment,
-      success: function(data) {
-        console.log(data);
-        if(data){
-          this.props.setList(data);
-        }
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
-
+    socket.emit('delete_message',data);
   },
   
   render() {
@@ -39,20 +22,22 @@ const MessageItem = React.createClass ({
 });
 
 const MessageList = React.createClass({
- 
   componentWillMount:function() {
     let data = RenewData.data;
     this.setState({data:data})
     //this.loadMessage();
     //setInterval(this.loadMessage,2000);
-    console.log('componentWillMount')
+    socket.on('update_message',function(data){
+      console.log('update_message');
+      RenewData.renew(data);
+      this.setState({data:data})
+    }.bind(this));
   },
     setList:function(list){
     this.setState({data:list});
   },
   
   render: function() {
-    console.log(this.props);
     const messages = this.state.data.map(function(data) {
       return (
         <MessageItem key={data.id} data={data} setList={this.setList}>

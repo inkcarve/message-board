@@ -8,33 +8,20 @@ var _RenewData = require('./RenewData.js');
 
 var _RenewData2 = _interopRequireDefault(_RenewData);
 
+var _Socket = require('./Socket.js');
+
+var _Socket2 = _interopRequireDefault(_Socket);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var url_message = "/api/message.json";
 var url_delete = '/api/message/delete';
+//const socket = io.connect();
 var MessageItem = React.createClass({
   displayName: 'MessageItem',
 
   delete: function _delete(data) {
-    var comment = {};
-    comment.id = data.id;
-    console.log(comment);
-
-    $.ajax({
-      url: url_delete,
-      dataType: 'json',
-      type: 'POST',
-      data: comment,
-      success: function (data) {
-        console.log(data);
-        if (data) {
-          this.props.setList(data);
-        }
-      }.bind(this),
-      error: function (xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
+    _Socket2.default.emit('delete_message', data);
   },
 
   render: function render() {
@@ -72,20 +59,22 @@ var MessageItem = React.createClass({
 var MessageList = React.createClass({
   displayName: 'MessageList',
 
-
   componentWillMount: function componentWillMount() {
     var data = _RenewData2.default.data;
     this.setState({ data: data });
     //this.loadMessage();
     //setInterval(this.loadMessage,2000);
-    console.log('componentWillMount');
+    _Socket2.default.on('update_message', function (data) {
+      console.log('update_message');
+      _RenewData2.default.renew(data);
+      this.setState({ data: data });
+    }.bind(this));
   },
   setList: function setList(list) {
     this.setState({ data: list });
   },
 
   render: function render() {
-    console.log(this.props);
     var messages = this.state.data.map(function (data) {
       return React.createElement(MessageItem, { key: data.id, data: data, setList: this.setList });
     }.bind(this));

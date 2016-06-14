@@ -1,9 +1,4 @@
 import { Router, Route, Link, isActive, browserHistory, IndexRoute ,DefaultRoute, RouteHandler} from 'react-router';
-const socket = io.connect();
-
-socket.on('socket', function(data){
-  console.log(data);
-});
 
 //createClass could not hot-load
 const App = React.createClass({
