@@ -53,7 +53,6 @@ var MessageForm = React.createClass({
     e.preventDefault();
     var author = this.state.author.trim();
     var text = this.state.text.trim();
-    console.log(author, text);
     if (!text || !author) {
       return;
     }
@@ -61,7 +60,6 @@ var MessageForm = React.createClass({
     this.setState({ author: '', text: '' });
   },
   render: function render() {
-    console.log(this);
     return React.createElement(
       'div',
       { className: 'row' },

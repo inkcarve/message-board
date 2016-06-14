@@ -16,6 +16,10 @@ var _bodyParser = require("body-parser");
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
+var _socket = require("socket.io");
+
+var _socket2 = _interopRequireDefault(_socket);
+
 var _webpackDevServer = require("webpack-dev-server");
 
 var _webpackDevServer2 = _interopRequireDefault(_webpackDevServer);
@@ -141,11 +145,10 @@ app.use(require('webpack-dev-middleware')(complier, {
 	noInfo: true,
 	historyApiFallback: true
 }));
-/*
- app.use(require("webpack-hot-middleware")(complier, {
-    log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000
+
+app.use(require("webpack-hot-middleware")(complier, {
+	log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000
 }));
-*/
 
 app.use('/', router);
 app.use(_express2.default.static(_path2.default.join(__dirname, '../../vendor/')));
@@ -158,16 +161,69 @@ var server = app.listen(server_port, server_ip_address, function () {
 	console.log('Example app listening at http://%s:%s', host, port);
 });
 
-//vendor
-/*
-const vendor = express();
-vendor.use(express.static(path.join(__dirname, '../../vendor/')));
-var server_vender = vendor.listen(vendor_port, server_ip_address, function() {
+// socket.io
+var serv_io = _socket2.default.listen(server);
 
-	var host = server_vender.address().address;
-	var port = server_vender.address().port;
+serv_io.sockets.on('connection', function (socket) {
+	//build connection
+	console.error('socket connect');
+	socket.emit('socket', 'socket connect');
 
-	console.log('Example app listening at http://%s:%s', host, port);
+	//add message
+	socket.on('add_message', function (new_data) {
+		_fs2.default.readFile(message_JSON, function (err, data) {
+			if (err) {
+				console.error(err);
+				process.exit(1);
+			}
+			var comments = JSON.parse(data);
+			// NOTE: In a real implementation, we would likely rely on a database or
+			// some other approach (e.g. UUIDs) to ensure a globally unique id. We'll
+			// treat Date.now() as unique-enough for our purposes.
+			var newComment = {
+				id: Date.now(),
+				author: new_data.author,
+				text: new_data.text
+			};
+			comments.push(newComment);
+			_fs2.default.writeFile(message_JSON, JSON.stringify(comments, null, 4), function (err) {
+				if (err) {
+					console.error(err);
+					process.exit(1);
+				}
+				socket.broadcast.emit('update_message', comments);
+				socket.emit('update_message', comments);
+				//io.sockets.emit('update_message', comments);
+				socket.emit('return_add', '200');
+			});
+		});
+	});
+	//delete message
+	socket.on('delete_message', function (item) {
+		_fs2.default.readFile(message_JSON, function (err, data) {
+			if (err) {
+				console.error(err);
+				process.exit(1);
+			}
+			var comments = JSON.parse(data);
 
+			var id = parseInt(item.id);
+			var newData = [];
+
+			for (var i = 0; i < comments.length; i++) {
+				if (id !== comments[i].id) {
+					newData.push(comments[i]);
+				}
+			};
+			_fs2.default.writeFile(message_JSON, JSON.stringify(newData, null, 4), function (err) {
+				if (err) {
+					console.error(err);
+					process.exit(1);
+				}
+				socket.broadcast.emit('update_message', newData);
+				socket.emit('update_message', newData);
+				//io.sockets.emit('update_message', newData);
+			});
+		});
+	});
 });
-*/

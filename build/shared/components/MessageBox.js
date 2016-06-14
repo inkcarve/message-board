@@ -7,7 +7,6 @@ var MessageBox = React.createClass({
   displayName: "MessageBox",
 
   render: function render() {
-    console.log(this);
     return React.createElement(
       "div",
       { className: "message_box" },

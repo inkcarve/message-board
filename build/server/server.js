@@ -112,7 +112,7 @@ router.post('/api/message.json', function (req, res) {
 router.get('/*', function (req, res) {
 	console.log(req.originalUrl);
 	if (req.originalUrl.search('api') == -1) {
-		res.sendFile(_path2.default.resolve(__dirname, '../../views/', 'index.html'));
+		res.sendFile(_path2.default.resolve(__dirname, '../../views/', 'index-two-port.html'));
 	} else {
 		_fs2.default.readFile(message_JSON, function (err, data) {
 			if (err) {
@@ -146,9 +146,71 @@ var server = app.listen(server_port, server_ip_address, function () {
 	console.log('Example app listening at http://%s:%s', host, port);
 });
 
+// socket.io
 var serv_io = _socket2.default.listen(server);
+
 serv_io.sockets.on('connection', function (socket) {
+	//build connection
+	console.error('socket connect');
 	socket.emit('socket', 'socket connect');
+
+	//add message
+	socket.on('add_message', function (new_data) {
+		_fs2.default.readFile(message_JSON, function (err, data) {
+			if (err) {
+				console.error(err);
+				process.exit(1);
+			}
+			var comments = JSON.parse(data);
+			// NOTE: In a real implementation, we would likely rely on a database or
+			// some other approach (e.g. UUIDs) to ensure a globally unique id. We'll
+			// treat Date.now() as unique-enough for our purposes.
+			var newComment = {
+				id: Date.now(),
+				author: new_data.author,
+				text: new_data.text
+			};
+			comments.push(newComment);
+			_fs2.default.writeFile(message_JSON, JSON.stringify(comments, null, 4), function (err) {
+				if (err) {
+					console.error(err);
+					process.exit(1);
+				}
+				socket.broadcast.emit('update_message', comments);
+				socket.emit('update_message', comments);
+				//io.sockets.emit('update_message', comments);
+				socket.emit('return_add', '200');
+			});
+		});
+	});
+	//delete message
+	socket.on('delete_message', function (item) {
+		_fs2.default.readFile(message_JSON, function (err, data) {
+			if (err) {
+				console.error(err);
+				process.exit(1);
+			}
+			var comments = JSON.parse(data);
+
+			var id = parseInt(item.id);
+			var newData = [];
+
+			for (var i = 0; i < comments.length; i++) {
+				if (id !== comments[i].id) {
+					newData.push(comments[i]);
+				}
+			};
+			_fs2.default.writeFile(message_JSON, JSON.stringify(newData, null, 4), function (err) {
+				if (err) {
+					console.error(err);
+					process.exit(1);
+				}
+				socket.broadcast.emit('update_message', newData);
+				socket.emit('update_message', newData);
+				//io.sockets.emit('update_message', newData);
+			});
+		});
+	});
 });
 
 //vendor

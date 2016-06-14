@@ -33,7 +33,6 @@ const MessageForm = React.createClass({
     e.preventDefault();
     var author = this.state.author.trim();
     var text = this.state.text.trim();
-    console.log (author,text)
     if (!text || !author) {
       return;
     }
@@ -41,7 +40,6 @@ const MessageForm = React.createClass({
     this.setState({author: '', text: ''});
   },
   render: function() {
-    console.log(this)
     return (
       <div className="row">
       <div className="col-md-6">

@@ -25,7 +25,6 @@ var RenewData = function () {
     key: 'renew',
     value: function renew(newData) {
       if (newData !== undefined) this.data = newData;
-      console.log(this.data);
       return this.data;
     }
   }]);

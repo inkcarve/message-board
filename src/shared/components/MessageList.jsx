@@ -6,6 +6,11 @@ const url_delete = '/api/message/delete';
 const MessageItem = React.createClass ({
    delete: function(data) {
     socket.emit('delete_message',data);
+    socket.on('update_message',function(data){
+      console.log('update_message');
+      RenewData.renew(data);
+      this.props.setList(data)
+    }.bind(this));
   },
   
   render() {
@@ -27,16 +32,14 @@ const MessageList = React.createClass({
     this.setState({data:data})
     //this.loadMessage();
     //setInterval(this.loadMessage,2000);
-    socket.on('update_message',function(data){
-      console.log('update_message');
-      RenewData.renew(data);
-      this.setState({data:data})
-    }.bind(this));
+    
   },
     setList:function(list){
     this.setState({data:list});
   },
-  
+    updateMessage:function(){
+
+    },
   render: function() {
     const messages = this.state.data.map(function(data) {
       return (
