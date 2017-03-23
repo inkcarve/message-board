@@ -1,9 +1,11 @@
-import data from '../../../message.json';
+//import data from '../../../message.json';
 class RenewData {
   constructor() {
-    this.data = data;
+    this.data = [];
   }
-  renew(newData){if(newData!==undefined)this.data = newData;
+  renew(newData){
+  	if(newData!==undefined)this.data = newData;
+  	console.log(newData);
   	return this.data;
   }
 }

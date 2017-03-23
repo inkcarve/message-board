@@ -34,6 +34,9 @@ var _devWebpackOneport2 = _interopRequireDefault(_devWebpackOneport);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//import fstorm from 'fstorm';
+//const writer = fstorm('../../message.json');
+
 var message_JSON = _path2.default.join(__dirname, '../../message.json');
 var app = (0, _express2.default)();
 var router = _express2.default.Router();
@@ -42,6 +45,7 @@ var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 //const vendor_port = process.env.NODE_PORT || 8000;
 
 var complier = (0, _webpack2.default)(_devWebpackOneport2.default);
+var wr = false;
 
 app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({
@@ -86,14 +90,15 @@ router.get('/*', function (req, res) {
 	}
 });
 
+/*
 app.use(require('webpack-dev-middleware')(complier, {
-	publicPath: _devWebpackOneport2.default.output.publicPath,
-	stats: { colors: true },
-	hot: true,
-	noInfo: true,
-	historyApiFallback: true
+  publicPath: config.output.publicPath,
+  stats: { colors: true },
+  hot: true,
+  noInfo: true,
+  historyApiFallback: true
 }));
-
+*/
 /*
  app.use(require("webpack-hot-middleware")(complier, {
     log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000
@@ -121,59 +126,72 @@ serv_io.sockets.on('connection', function (socket) {
 
 	//add message
 	socket.on('add_message', function (new_data) {
-		_fs2.default.readFile(message_JSON, function (err, data) {
-			if (err) {
-				console.error(err);
-				process.exit(1);
-			}
-			var comments = JSON.parse(data);
-			// NOTE: In a real implementation, we would likely rely on a database or
-			// some other approach (e.g. UUIDs) to ensure a globally unique id. We'll
-			// treat Date.now() as unique-enough for our purposes.
-			var newComment = {
-				id: Date.now(),
-				author: new_data.author,
-				text: new_data.text
-			};
-			comments.push(newComment);
-			_fs2.default.writeFile(message_JSON, JSON.stringify(comments, null, 4), function (err) {
+		if (!wr) {
+			wr = true;
+			_fs2.default.readFileSync(message_JSON, function (err, data) {
 				if (err) {
 					console.error(err);
 					process.exit(1);
 				}
-				socket.broadcast.emit('update_message', comments);
-				socket.emit('update_message', comments);
-				//io.sockets.emit('update_message', comments);
-				socket.emit('return_add', '200');
+				var comments = JSON.parse(data);
+				// NOTE: In a real implementation, we would likely rely on a database or
+				// some other approach (e.g. UUIDs) to ensure a globally unique id. We'll
+				// treat Date.now() as unique-enough for our purposes.
+				var newComment = {
+					id: Date.now(),
+					author: new_data.author,
+					text: new_data.text
+				};
+				comments.push(newComment);
+				_fs2.default.writeFileSync(message_JSON, JSON.stringify(comments, null, 4), function (err) {
+					if (err) {
+						console.error(err);
+						process.exit(1);
+					}
+					socket.broadcast.emit('update_message', comments);
+					socket.emit('update_message', comments);
+					//io.sockets.emit('update_message', comments);
+					socket.emit('return_add', '200');
+				});
 			});
-		});
+		} else {
+			socket.emit('busy', 'busy');
+		}
 	});
 	//delete message
 	socket.on('delete_message', function (item) {
-		_fs2.default.readFile(message_JSON, function (err, data) {
-			if (err) {
-				console.error(err);
-				process.exit(1);
-			}
-			var comments = JSON.parse(data);
-
-			var id = parseInt(item.id);
-			var newData = [];
-
-			for (var i = 0; i < comments.length; i++) {
-				if (id !== comments[i].id) {
-					newData.push(comments[i]);
-				}
-			};
-			_fs2.default.writeFile(message_JSON, JSON.stringify(newData, null, 4), function (err) {
+		if (!wr) {
+			wr = true;
+			_fs2.default.readFileSync(message_JSON, function (err, data) {
 				if (err) {
 					console.error(err);
 					process.exit(1);
 				}
-				socket.broadcast.emit('update_message', newData);
-				socket.emit('update_message', newData);
-				//io.sockets.emit('update_message', newData);
+				var comments = JSON.parse(data);
+
+				var id = parseInt(item.id);
+				var newData = [];
+
+				for (var i = 0; i < comments.length; i++) {
+					if (id !== comments[i].id) {
+						newData.push(comments[i]);
+					}
+				};
+				_fs2.default.writeFileSync(message_JSON, JSON.stringify(newData, null, 4), function (err) {
+					if (err) {
+						console.error(err);
+						process.exit(1);
+					}
+					setTimeout(function () {
+						wr = false;
+					}, 1000);
+					socket.broadcast.emit('update_message', newData);
+					socket.emit('update_message', newData);
+					//io.sockets.emit('update_message', newData);
+				});
 			});
-		});
+		} else {
+				socket.emit('busy', 'busy');
+			}
 	});
 });

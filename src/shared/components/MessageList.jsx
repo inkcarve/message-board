@@ -1,5 +1,6 @@
 import RenewData from './RenewData.js';
 import socket from './Socket.js';
+import $ from 'jquery';
 const url_message = "/api/message.json";
 const url_delete = '/api/message/delete';
 //const socket = io.connect();
@@ -27,9 +28,34 @@ const MessageItem = React.createClass ({
 });
 
 const MessageList = React.createClass({
+
+  //super(props);
+  state:{
+data:RenewData.renew()
+  },
+
   componentWillMount:function() {
-    let data = RenewData.data;
-    this.setState({data:data})
+    //let data = RenewData.data;
+    var dataOld;
+    var self =this;
+    this.setState({data:RenewData.renew([])});
+    $.get('getFirstMessage',function(data){
+      console.log(data);
+        RenewData.renew(data);
+        self.setState({data:RenewData.renew()});
+      });
+
+/*    this.setState({data:function(){
+
+      socket.on('update_message',function(data){
+      console.log('update_message');
+      RenewData.renew(data);
+      dataOld = data;
+      this.setList(data);
+      self.setState({data:data});
+    }.bind(this));*/
+    socket.emit('get_message','');
+
     //this.loadMessage();
     //setInterval(this.loadMessage,2000);
     
@@ -41,6 +67,7 @@ const MessageList = React.createClass({
 
     },
   render: function() {
+    console.log(this);
     const messages = this.state.data.map(function(data) {
       return (
         <MessageItem key={data.id} data={data} setList={this.setList}>

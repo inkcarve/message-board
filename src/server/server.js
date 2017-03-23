@@ -3,12 +3,21 @@ import path from "path";
 import fs from 'fs';
 import bodyParser from "body-parser";
 import io from "socket.io";
-const message_JSON = path.join(__dirname, '../../message.json')
+const message_JSON = path.join(__dirname, '../../message.json');
 const app = express();
 const router = express.Router();
 const server_port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 const server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 const vendor_port = process.env.OPENSHIFT_NODEJS_PORT || 8000;
+
+import mysql from "mysql";
+const connection = mysql.createConnection({
+  host     : 'localhost',
+  port:'3306',
+  user     : 'root',
+  password : '123456',
+  database : 'mtome'
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -17,7 +26,7 @@ app.use(bodyParser.urlencoded({
 
 // Additional middleware which will set headers that we need on each request.
 router.use(function(req, res, next) {
-	// 輸出記錄訊息至終端機
+	// ݔ��ӛ�ӍϢ���K�˙C
 	console.log(req.method, req.url);
 	// Set permissive CORS header - this allows this server to be used only as
 	// an API server in conjunction with something like webpack-dev-server.
@@ -28,14 +37,22 @@ router.use(function(req, res, next) {
 	next();
 });
 
-router.get('/api/message.json', function(req, res) {
-	fs.readFile(message_JSON, function(err, data) {
+router.get('/getFirstMessage', function(req, res) {
+	var data;
+	connection.query('SELECT * FROM message',function(err,rows){
+			console.log(err);
+			data = rows;
+			res.json(data);
+		});
+
+	
+	/*fs.readFile(message_JSON, function(err, data) {
 		if (err) {
 			console.error(err);
 			process.exit(1);
 		}
 		res.json(JSON.parse(data));
-	});
+	});*/
 });
 
 router.post('/api/message/delete', function(req, res) {
@@ -96,12 +113,16 @@ router.get('/*', function(req, res) {
 	if (req.originalUrl.search('api') == -1) {
 		res.sendFile(path.resolve(__dirname, '../../views/', 'index-two-port.html'));
 	} else {
-		fs.readFile(message_JSON, function(err, data) {
+		/*fs.readFile(message_JSON, function(err, data) {
 			if (err) {
 				console.error(err);
 				process.exit(1);
 			}
 			res.json(JSON.parse(data));
+		});*/
+		connection.query('SELECT * FROM message',function(err,result){
+			console.log(result);
+			console.log(err);
 		});
 	}
 
@@ -138,6 +159,12 @@ serv_io.sockets.on('connection', function(socket) {
 console.error('socket connect');
     socket.emit('socket', 'socket connect');
 
+    socket.on('get_message', function(v) {
+    	connection.query('SELECT * FROM message',function(err,rows){
+			console.log(err);
+			socket.emit('update_message', rows);
+		});
+	});
 //add message
     socket.on('add_message', function(new_data) {
 	fs.readFile(message_JSON, function(err, data) {
@@ -155,7 +182,7 @@ console.error('socket connect');
 			text: new_data.text,
 		};
 		comments.push(newComment);
-		fs.writeFile(message_JSON, JSON.stringify(comments, null, 4), function(err) {
+		fs.writeFileSync(message_JSON, JSON.stringify(comments, null, 4), function(err) {
 			if (err) {
 				console.error(err);
 				process.exit(1);
@@ -185,7 +212,7 @@ console.error('socket connect');
 					newData.push(comments[i]);
 				}
 			};
-			fs.writeFile(message_JSON, JSON.stringify(newData, null, 4), function(err) {
+			fs.writeFileSync(message_JSON, JSON.stringify(newData, null, 4), function(err) {
 				if (err) {
 					console.error(err);
 					process.exit(1);

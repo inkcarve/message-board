@@ -13,7 +13,7 @@
     "dev-server": "node build/server/webpack-server",
     "current": "concurrently \"npm run watch-js\" \"npm run dev-server\" \"npm run server\"",
     "current-oneport": "concurrently \"npm run watch-js\" \"npm run server-oneport\"",
-    "dev-openshift":"concurrently \"npm run watch-js\" \"nodemon build/server/server-openshift.js\"",
+    "dev-openshift": "concurrently \"npm run watch-js\" \"nodemon build/server/server-openshift.js\"",
     "start": "node build/server/server-openshift.js",
     "build": "npm run clean && babel src -d build"
   },
@@ -41,6 +41,7 @@
     "file-loader": "^0.8.5",
     "jquery": "^2.2.4",
     "json-loader": "^0.5.4",
+    "mysql": "^2.11.1",
     "node-libs-browser": "^1.0.0",
     "node-sass": "^3.7.0",
     "nodemon": "^1.9.2",

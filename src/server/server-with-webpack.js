@@ -12,7 +12,14 @@ const server_ip_address = process.env.OPENSHIFT_NODEJS_IP  || '127.0.0.1';
 import WebpackDevServer from "webpack-dev-server";
 import webpack from "webpack";
 import config from "../../dev-webpack-oneport.config";
+import mysql from "mysql";
 const complier = webpack(config);
+
+const connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : '123456'
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -21,7 +28,7 @@ app.use(bodyParser.urlencoded({
 
 // Additional middleware which will set headers that we need on each request.
 router.use(function(req, res, next) {
-	// 輸出記錄訊息至終端機
+	// ݔ��ӛ�ӍϢ���K�˙C
 	console.log(req.method, req.url);
 	// Set permissive CORS header - this allows this server to be used only as
 	// an API server in conjunction with something like webpack-dev-server.

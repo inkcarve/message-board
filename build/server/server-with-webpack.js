@@ -32,6 +32,10 @@ var _devWebpackOneport = require("../../dev-webpack-oneport.config");
 
 var _devWebpackOneport2 = _interopRequireDefault(_devWebpackOneport);
 
+var _mysql = require("mysql");
+
+var _mysql2 = _interopRequireDefault(_mysql);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var message_JSON = _path2.default.join(__dirname, '../../message.json');
@@ -43,6 +47,12 @@ var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
 var complier = (0, _webpack2.default)(_devWebpackOneport2.default);
 
+var connection = _mysql2.default.createConnection({
+	host: 'localhost',
+	user: 'root',
+	password: '123456'
+});
+
 app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({
 	extended: true
@@ -50,7 +60,7 @@ app.use(_bodyParser2.default.urlencoded({
 
 // Additional middleware which will set headers that we need on each request.
 router.use(function (req, res, next) {
-	// 輸出記錄訊息至終端機
+	// ݔ��ӛ��ӍϢ���K�˙C
 	console.log(req.method, req.url);
 	// Set permissive CORS header - this allows this server to be used only as
 	// an API server in conjunction with something like webpack-dev-server.

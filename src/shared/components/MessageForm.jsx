@@ -12,6 +12,7 @@ const MessageForm = React.createClass({
     socket.emit('add_message',comment);
   },
   componentWillMount:function() {
+    
     this.setState({data:data})
     socket.on('update_message',function(data){
       RenewData.renew(data);

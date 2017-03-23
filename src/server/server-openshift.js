@@ -1,6 +1,8 @@
 import express from "express";
 import path from "path";
 import fs from 'fs';
+//import fstorm from 'fstorm';
+//const writer = fstorm('../../message.json');
 import bodyParser from "body-parser";
 import io from "socket.io";
 const message_JSON = path.join(__dirname, '../../message.json')
@@ -13,6 +15,7 @@ import WebpackDevServer from "webpack-dev-server";
 import webpack from "webpack";
 import config from "../../dev-webpack-oneport.config";
 const complier = webpack(config);
+let wr = false;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -58,7 +61,7 @@ router.get('/*', function(req, res) {
 
 })
 
-
+/*
 app.use(require('webpack-dev-middleware')(complier, {
   publicPath: config.output.publicPath,
   stats: { colors: true },
@@ -66,7 +69,7 @@ app.use(require('webpack-dev-middleware')(complier, {
   noInfo: true,
   historyApiFallback: true
 }));
-
+*/
 /*
  app.use(require("webpack-hot-middleware")(complier, {
     log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000
@@ -95,7 +98,9 @@ console.error('socket connect');
 
 //add message
     socket.on('add_message', function(new_data) {
-	fs.readFile(message_JSON, function(err, data) {
+		if(!wr){
+			wr = true;
+	fs.readFileSync(message_JSON, function(err, data) {
 		if (err) {
 			console.error(err);
 			process.exit(1);
@@ -110,7 +115,7 @@ console.error('socket connect');
 			text: new_data.text,
 		};
 		comments.push(newComment);
-		fs.writeFile(message_JSON, JSON.stringify(comments, null, 4), function(err) {
+		fs.writeFileSync(message_JSON, JSON.stringify(comments, null, 4), function(err) {
 			if (err) {
 				console.error(err);
 				process.exit(1);
@@ -121,11 +126,13 @@ console.error('socket connect');
 			socket.emit('return_add', '200');
 		});
 		});
-    
+    }else{socket.emit('busy', 'busy');}
 	});
     //delete message
 	socket.on('delete_message', function(item) {
-		fs.readFile(message_JSON, function(err, data) {
+		if(!wr){
+			wr = true;
+		fs.readFileSync(message_JSON, function(err, data) {
 			if (err) {
 				console.error(err);
 				process.exit(1);
@@ -140,15 +147,19 @@ console.error('socket connect');
 					newData.push(comments[i]);
 				}
 			};
-			fs.writeFile(message_JSON, JSON.stringify(newData, null, 4), function(err) {
+			fs.writeFileSync(message_JSON, JSON.stringify(newData, null, 4), function(err) {
 				if (err) {
 					console.error(err);
 					process.exit(1);
 				}
+				setTimeout(function(){wr = false;},1000);
 				socket.broadcast.emit('update_message', newData);
 				socket.emit('update_message', newData);
 				//io.sockets.emit('update_message', newData);
 			});
 		});
+		}else{
+			socket.emit('busy', 'busy');
+		}
 	});
 });
