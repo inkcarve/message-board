@@ -3,7 +3,7 @@ import path from "path";
 import fs from 'fs';
 import bodyParser from "body-parser";
 import io from "socket.io";
-const message_JSON = path.join(__dirname, '../../message.json');
+const message_JSON = path.join(__dirname, '../../message.json')
 const app = express();
 const router = express.Router();
 const server_port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
@@ -11,13 +11,15 @@ const server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 const vendor_port = process.env.OPENSHIFT_NODEJS_PORT || 8000;
 
 import mysql from "mysql";
-const connection = mysql.createConnection({
+
+const mysqlConfig = {
   host     : 'localhost',
   port:'3306',
   user     : 'root',
   password : '123456',
   database : 'mtome'
-});
+};
+const pool = mysql.createPool(mysqlConfig);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -26,7 +28,7 @@ app.use(bodyParser.urlencoded({
 
 // Additional middleware which will set headers that we need on each request.
 router.use(function(req, res, next) {
-	// 輸出記錄訊息至終端機
+	// 脻鈥澛趁睹撯�好も�好撀嵜徛⒚柮伮終露脣鈩
 	console.log(req.method, req.url);
 	// Set permissive CORS header - this allows this server to be used only as
 	// an API server in conjunction with something like webpack-dev-server.
@@ -39,12 +41,14 @@ router.use(function(req, res, next) {
 
 router.get('/getFirstMessage', function(req, res) {
 	var data;
+	pool.getConnection(function(err, connection) {
 	connection.query('SELECT * FROM message',function(err,rows){
 			console.log(err);
 			data = rows;
 			res.json(data);
+			connection.release();
 		});
-
+});
 	
 	/*fs.readFile(message_JSON, function(err, data) {
 		if (err) {
@@ -120,10 +124,6 @@ router.get('/*', function(req, res) {
 			}
 			res.json(JSON.parse(data));
 		});*/
-		connection.query('SELECT * FROM message',function(err,result){
-			console.log(result);
-			console.log(err);
-		});
 	}
 
 })
@@ -160,40 +160,36 @@ console.error('socket connect');
     socket.emit('socket', 'socket connect');
 
     socket.on('get_message', function(v) {
+    	//var connection = createDBLink();
+    	pool.getConnection(function(err, connection) {
     	connection.query('SELECT * FROM message',function(err,rows){
 			console.log(err);
+			//connection.release();
+			connection.release();
 			socket.emit('update_message', rows);
 		});
+});
 	});
 //add message
     socket.on('add_message', function(new_data) {
-	fs.readFile(message_JSON, function(err, data) {
-		if (err) {
-			console.error(err);
-			process.exit(1);
-		}
-		let comments = JSON.parse(data);
-		// NOTE: In a real implementation, we would likely rely on a database or
-		// some other approach (e.g. UUIDs) to ensure a globally unique id. We'll
-		// treat Date.now() as unique-enough for our purposes.
-		let newComment = {
-			id: Date.now(),
-			author: new_data.author,
-			text: new_data.text,
-		};
-		comments.push(newComment);
-		fs.writeFileSync(message_JSON, JSON.stringify(comments, null, 4), function(err) {
-			if (err) {
-				console.error(err);
-				process.exit(1);
-			}
-			socket.broadcast.emit('update_message', comments);
+    	//var connection = createDBLink();
+    	pool.getConnection(function(err, connection) {
+    	connection.query('INSERT INTO message(id,author,text,add_date,add_time) VALUES(?,?,?,NOW(),NOW())',[Date.now(),new_data.author,new_data.text],function(err,row){
+    		if (err) {
+      return connection.rollback(function() {
+        throw err;
+      });
+    }
+    console.log(row);
+    connection.release();
+/*          socket.broadcast.emit('add_success', row);
 			socket.emit('update_message', comments);
 			//io.sockets.emit('update_message', comments);
 			socket.emit('return_add', '200');
-		});
-		});
-    
+			connection.release();*/
+    	});
+    });
+ 
 	});
     //delete message
 	socket.on('delete_message', function(item) {

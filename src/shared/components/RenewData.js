@@ -8,6 +8,10 @@ class RenewData {
   	console.log(newData);
   	return this.data;
   }
+  add(addData){
+  	this.data.push(addData);
+  	return this.data;
+  }
 }
 
 export default (new RenewData);

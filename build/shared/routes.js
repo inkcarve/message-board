@@ -134,7 +134,7 @@ var About = function (_React$Component) {
   function About() {
     _classCallCheck(this, About);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(About).apply(this, arguments));
+    return _possibleConstructorReturn(this, (About.__proto__ || Object.getPrototypeOf(About)).apply(this, arguments));
   }
 
   _createClass(About, [{

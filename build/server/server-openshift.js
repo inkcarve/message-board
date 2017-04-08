@@ -36,7 +36,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 //import fstorm from 'fstorm';
 //const writer = fstorm('../../message.json');
-
 var message_JSON = _path2.default.join(__dirname, '../../message.json');
 var app = (0, _express2.default)();
 var router = _express2.default.Router();
@@ -191,7 +190,7 @@ serv_io.sockets.on('connection', function (socket) {
 				});
 			});
 		} else {
-				socket.emit('busy', 'busy');
-			}
+			socket.emit('busy', 'busy');
+		}
 	});
 });

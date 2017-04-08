@@ -9,7 +9,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 //import data from '../../../message.json';
-
 var RenewData = function () {
   function RenewData() {
     _classCallCheck(this, RenewData);
@@ -22,6 +21,12 @@ var RenewData = function () {
     value: function renew(newData) {
       if (newData !== undefined) this.data = newData;
       console.log(newData);
+      return this.data;
+    }
+  }, {
+    key: "add",
+    value: function add(addData) {
+      this.data.push(addData);
       return this.data;
     }
   }]);

@@ -14,8 +14,8 @@ const MessageForm = React.createClass({
   componentWillMount:function() {
     
     this.setState({data:data})
-    socket.on('update_message',function(data){
-      RenewData.renew(data);
+    socket.on('add_success',function(data){
+      RenewData.add(data);
     });
     socket.on('return_add',function(data){
       this.context.router.push('/message');

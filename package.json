@@ -1,7 +1,7 @@
 {
   "name": "message-board",
   "version": "0.0.1",
-  "description": "",
+  "description": "nodejs v5.11.1",
   "private": true,
   "main": "server-with-webpack.js",
   "scripts": {
@@ -41,7 +41,8 @@
     "file-loader": "^0.8.5",
     "jquery": "^2.2.4",
     "json-loader": "^0.5.4",
-    "mysql": "^2.11.1",
+    "jsonfile": "^2.3.1",
+    "mysql": "^2.13.0",
     "node-libs-browser": "^1.0.0",
     "node-sass": "^3.7.0",
     "nodemon": "^1.9.2",
