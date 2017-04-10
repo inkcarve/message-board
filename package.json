@@ -21,7 +21,9 @@
     "name": "Ting Wei Lin",
     "email": "inkcarve@gmail.com"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "concurrently": "^2.2.0"
+  },
   "dependencies": {
     "babel": "^6.5.2",
     "babel-cli": "^6.9.0",

@@ -13,11 +13,12 @@ const MessageForm = React.createClass({
   },
   componentWillMount:function() {
     
-    this.setState({data:data})
-    socket.on('add_success',function(data){
+    this.setState({data:data});
+/*    socket.on('add_success',function(data){
       RenewData.add(data);
     });
-    socket.on('return_add',function(data){
+*/
+    socket.on('add_success',function(data){
       this.context.router.push('/message');
     }.bind(this));
   },

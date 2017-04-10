@@ -40,14 +40,11 @@ router.use(function(req, res, next) {
 });
 
 router.get('/getFirstMessage', function(req, res) {
-	var data;
-	pool.getConnection(function(err, connection) {
-	connection.query('SELECT * FROM message',function(err,rows){
-			console.log(err);
-			data = rows;
-			res.json(data);
-			connection.release();
-		});
+	getDBData().then((data)=>{
+		res.json(data);
+	},(err)=>{
+
+	});
 });
 	
 	/*fs.readFile(message_JSON, function(err, data) {
@@ -57,7 +54,7 @@ router.get('/getFirstMessage', function(req, res) {
 		}
 		res.json(JSON.parse(data));
 	});*/
-});
+
 
 router.post('/api/message/delete', function(req, res) {
 	fs.readFile(message_JSON, function(err, data) {
@@ -162,13 +159,13 @@ console.error('socket connect');
     socket.on('get_message', function(v) {
     	//var connection = createDBLink();
     	pool.getConnection(function(err, connection) {
-    	connection.query('SELECT * FROM message',function(err,rows){
-			console.log(err);
-			//connection.release();
-			connection.release();
-			socket.emit('update_message', rows);
+	    	connection.query('SELECT * FROM message',function(err,rows){
+				console.log(err);
+				//connection.release();
+				connection.release();
+				socket.emit('update_message', rows);
+			});
 		});
-});
 	});
 //add message
     socket.on('add_message', function(new_data) {
@@ -176,17 +173,16 @@ console.error('socket connect');
     	pool.getConnection(function(err, connection) {
     	connection.query('INSERT INTO message(id,author,text,add_date,add_time) VALUES(?,?,?,NOW(),NOW())',[Date.now(),new_data.author,new_data.text],function(err,row){
     		if (err) {
-      return connection.rollback(function() {
-        throw err;
-      });
+		      return connection.rollback(function() {
+		        throw err;
+		});
     }
     console.log(row);
     connection.release();
-/*          socket.broadcast.emit('add_success', row);
-			socket.emit('update_message', comments);
+        	socket.emit('add_success');
+//			socket.emit('update_message', comments);
 			//io.sockets.emit('update_message', comments);
-			socket.emit('return_add', '200');
-			connection.release();*/
+			//socket.emit('return_add', '200');
     	});
     });
  
@@ -220,6 +216,21 @@ console.error('socket connect');
 		});
 	});
 });
+
+function getDBData (){
+	var Promise = new Promise((resolve,reject) => {
+		var data;
+	pool.getConnection(function(err, connection) {
+	connection.query('SELECT * FROM message',function(err,rows){
+				console.log(err);
+				//connection.release();
+				connection.release();
+				return resolve(data);
+			});
+});
+	});
+	
+}
 
 
 //vendor
