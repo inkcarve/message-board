@@ -17,12 +17,12 @@ const MessageItem = React.createClass ({
   render() {
     return ( 
       <div className="col-md-4 col-sm-6">
-      <div className="post-block">
+        <div className="post-block">
           <h4>{this.props.data.author}:</h4>
           <p>{this.props.data.text}</p >
           <button className="btn btn-default" onClick={() => {this.delete(this.props.data)}}>Delete !</button>
           </div>
-      </div >
+      </div>
     );
   }
 });
@@ -31,15 +31,15 @@ const MessageList = React.createClass({
 
   //super(props);
   state:{
-data:RenewData.renew()
+    data:RenewData.renew()
   },
 
   componentWillMount:function() {
-    //let data = RenewData.data;
+    //let data = RenewData.data;  
     var dataOld;
     var self =this;
     this.setState({data:RenewData.renew([])});
-    $.get('getFirstMessage',function(data){
+    $.get('/getFirstMessage',function(data){
       console.log(data);
         RenewData.renew(data);
         self.setState({data:RenewData.renew()});
@@ -54,7 +54,6 @@ data:RenewData.renew()
       this.setList(data);
       self.setState({data:data});
     }.bind(this));*/
-    socket.emit('get_message','');
 
     //this.loadMessage();
     //setInterval(this.loadMessage,2000);

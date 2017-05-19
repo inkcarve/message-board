@@ -1,5 +1,6 @@
-import { Router, Route, Link, isActive, browserHistory, IndexRoute ,DefaultRoute, RouteHandler} from 'react-router';
-
+import { Router, Route, Link, isActive, Redirect, browserHistory, IndexRoute ,DefaultRoute, RouteHandler} from 'react-router';
+import React from 'react';
+// var Redirect = ReactRouter.Redirect;
 //createClass could not hot-load
 const App = React.createClass({
 render(){
@@ -61,6 +62,7 @@ import Home from "./components/Home.jsx";
 import MessageBox from "./components/MessageBox.jsx";
 import MessageList from "./components/MessageList.jsx";
 import MessageForm from "./components/MessageForm.jsx";
+import NotFoundPage from "./components/404.jsx";
 import RenewData from './components/RenewData.js';
 
 export default (
@@ -73,6 +75,9 @@ export default (
       <IndexRoute component={MessageList}></IndexRoute>
       <Route path="write" component={MessageForm}></Route>
     </Route>
+    <Route path='/404' component={NotFoundPage} />
+        {/* 如果都不匹配，重定向到 404 */}
+    <Redirect from='*' to='/404' />
   </Route>
   </Router>
 );

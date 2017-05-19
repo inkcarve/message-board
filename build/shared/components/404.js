@@ -6,35 +6,30 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = require("react");
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var AppHandler = function (_React$Component) {
-  _inherits(AppHandler, _React$Component);
+//import React from "react";
+var NotFound = function (_React$Component) {
+  _inherits(NotFound, _React$Component);
 
-  function AppHandler() {
-    _classCallCheck(this, AppHandler);
+  function NotFound() {
+    _classCallCheck(this, NotFound);
 
-    return _possibleConstructorReturn(this, (AppHandler.__proto__ || Object.getPrototypeOf(AppHandler)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (NotFound.__proto__ || Object.getPrototypeOf(NotFound)).apply(this, arguments));
   }
 
-  _createClass(AppHandler, [{
+  _createClass(NotFound, [{
     key: "render",
     value: function render() {
-      return _react2.default.createElement(
+      return React.createElement(
         "h1",
         null,
-        "Message Board demo ",
-        _react2.default.createElement(
+        "404 Not Found ",
+        React.createElement(
           "span",
           null,
           "!!"
@@ -43,7 +38,7 @@ var AppHandler = function (_React$Component) {
     }
   }]);
 
-  return AppHandler;
-}(_react2.default.Component);
+  return NotFound;
+}(React.Component);
 
-exports.default = AppHandler;
+exports.default = NotFound;

@@ -35,9 +35,6 @@ var MessageForm = React.createClass({
 
     this.setState({ data: _message2.default });
     _Socket2.default.on('add_success', function (data) {
-      _RenewData2.default.add(data);
-    });
-    _Socket2.default.on('return_add', function (data) {
       this.context.router.push('/message');
     }.bind(this));
   },

@@ -1,27 +1,57 @@
 var webpack = require('webpack');
 var path = require('path');
-var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
+// var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 //var ExtractTextPlugin = require('extract-text-webpack-plugin');
-
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+ var CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
     devtool: 'inline-source-map',
     entry: {
-        app: [
+        bundle: [
             './src/client/index.jsx',
-            'webpack-dev-server/client?http://127.0.0.1:8080',
-            'webpack/hot/only-dev-server' // '如果不是only-dev-server是dev-server， HMR 更新失败之后会當自動刷新整个页面
         ],
         lib: ['jquery', 'bootstrap-sass', "react", "react-dom", "react-router", "redux", "socket.io-client"]
     },
     output: {
-        path: __dirname + '/views/',
-        filename: 'bundle.js',
-        publicPath: 'http://127.0.0.1:8080/'
+        path: __dirname + '/views/js/',
+        // filename: 'bundle.js',
+        filename: "bundle.[hash].js",
+        chunkFilename: 'lib.[hash].js',
+        publicPath: '/js/'
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
-        new webpack.optimize.CommonsChunkPlugin( /* chunkName= */ "lib", /* filename= */ "lib.js"),
+        new CleanWebpackPlugin(
+            [
+                './views/js'
+            ]
+        ),
+/*        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery',
+            'window.jQuery': 'jquery',
+            'root.jQuery': 'jquery'
+        })*/
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            },
+            output: {
+                comments: false
+            },
+            sourceMap: false
+        }),
+        new webpack.optimize.CommonsChunkPlugin({name:'lib',filename:'lib.[hash].js',minChunks: Infinity})
+        ,
+        new HtmlWebpackPlugin({
+    filename: path.join(__dirname, './views/')+ 'index.html',
+    template: path.join(__dirname, './views/')+'tpl_index.html',
+    // chunks: ['bundle','lib'],
+    inject: 'body',
+    hash: true, // Ϊ��̬��Դ����hashֵ
+    minify: { removeAttributeQuotes: true }
+  })
         //new ExtractTextPlugin(path.resolve(__dirname, './src/client/scss'), path.resolve(__dirname, './node_modules'))
     ],
     resolve: {
@@ -31,7 +61,7 @@ module.exports = {
         //load some libary from public CDN outside , and need add <script src=""> to HTML
     },
     module: {
-        noParse: ['jquery', 'bootstrap-sass', "react"],
+        noParse: ['jquery', 'bootstrap-sass', "react", "react-dom", "react-router", "redux", "socket.io-client"],
         loaders: [{
                 test: /\.jsx$/,
                 loaders: ['react-hot', 'babel-loader'],
@@ -54,14 +84,14 @@ module.exports = {
                 //      'style!css!sass?sourceMap'
                 //)
             }, {
+                test: require.resolve('jquery'),
+                loader: 'expose?jQuery'
+            }, {
                 test: require.resolve('react-dom'),
                 loader: 'expose?ReactDOM'
             }, {
                 test: require.resolve('react'),
                 loader: 'expose?React'
-            }, {
-                test: require.resolve('jquery'),
-                loader: 'expose?jQuery'
             }, {
                 test: require.resolve('socket.io-client'),
                 loader: 'expose?io'

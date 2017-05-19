@@ -75,11 +75,11 @@ var MessageList = React.createClass({
   },
 
   componentWillMount: function componentWillMount() {
-    //let data = RenewData.data;
+    //let data = RenewData.data;  
     var dataOld;
     var self = this;
     this.setState({ data: _RenewData2.default.renew([]) });
-    _jquery2.default.get('getFirstMessage', function (data) {
+    _jquery2.default.get('/getFirstMessage', function (data) {
       console.log(data);
       _RenewData2.default.renew(data);
       self.setState({ data: _RenewData2.default.renew() });
@@ -94,7 +94,6 @@ var MessageList = React.createClass({
           this.setList(data);
           self.setState({data:data});
         }.bind(this));*/
-    _Socket2.default.emit('get_message', '');
 
     //this.loadMessage();
     //setInterval(this.loadMessage,2000);

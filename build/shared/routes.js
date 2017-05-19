@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -6,25 +6,33 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _reactRouter = require("react-router");
+var _reactRouter = require('react-router');
 
-var _Home = require("./components/Home.jsx");
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Home = require('./components/Home.jsx');
 
 var _Home2 = _interopRequireDefault(_Home);
 
-var _MessageBox = require("./components/MessageBox.jsx");
+var _MessageBox = require('./components/MessageBox.jsx');
 
 var _MessageBox2 = _interopRequireDefault(_MessageBox);
 
-var _MessageList = require("./components/MessageList.jsx");
+var _MessageList = require('./components/MessageList.jsx');
 
 var _MessageList2 = _interopRequireDefault(_MessageList);
 
-var _MessageForm = require("./components/MessageForm.jsx");
+var _MessageForm = require('./components/MessageForm.jsx');
 
 var _MessageForm2 = _interopRequireDefault(_MessageForm);
 
-var _RenewData = require("./components/RenewData.js");
+var _ = require('./components/404.jsx');
+
+var _2 = _interopRequireDefault(_);
+
+var _RenewData = require('./components/RenewData.js');
 
 var _RenewData2 = _interopRequireDefault(_RenewData);
 
@@ -36,88 +44,89 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+// var Redirect = ReactRouter.Redirect;
 //createClass could not hot-load
-var App = React.createClass({
-  displayName: "App",
+var App = _react2.default.createClass({
+  displayName: 'App',
   render: function render() {
-    return React.createElement(
-      "div",
+    return _react2.default.createElement(
+      'div',
       null,
-      React.createElement(
-        "nav",
-        { className: "navbar navbar-default" },
-        React.createElement(
-          "div",
-          { className: "container" },
-          React.createElement(
-            "div",
-            { className: "navbar-header" },
-            React.createElement(
-              "button",
-              { type: "button", className: "navbar-toggle collapsed", "data-toggle": "collapse", "data-target": "#bs-example-navbar-collapse-1", "aria-expanded": "false" },
-              " ",
-              React.createElement(
-                "span",
-                { className: "sr-only" },
-                "Toggle navigation"
+      _react2.default.createElement(
+        'nav',
+        { className: 'navbar navbar-default' },
+        _react2.default.createElement(
+          'div',
+          { className: 'container' },
+          _react2.default.createElement(
+            'div',
+            { className: 'navbar-header' },
+            _react2.default.createElement(
+              'button',
+              { type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '#bs-example-navbar-collapse-1', 'aria-expanded': 'false' },
+              ' ',
+              _react2.default.createElement(
+                'span',
+                { className: 'sr-only' },
+                'Toggle navigation'
               ),
-              " ",
-              React.createElement("span", { className: "icon-bar" }),
-              " ",
-              React.createElement("span", { className: "icon-bar" }),
-              " ",
-              React.createElement("span", { className: "icon-bar" }),
-              " "
+              ' ',
+              _react2.default.createElement('span', { className: 'icon-bar' }),
+              ' ',
+              _react2.default.createElement('span', { className: 'icon-bar' }),
+              ' ',
+              _react2.default.createElement('span', { className: 'icon-bar' }),
+              ' '
             ),
-            React.createElement(
-              "a",
-              { className: "navbar-brand", href: "/" },
-              "M",
-              React.createElement(
-                "span",
+            _react2.default.createElement(
+              'a',
+              { className: 'navbar-brand', href: '/' },
+              'M',
+              _react2.default.createElement(
+                'span',
                 null,
-                "."
+                '.'
               ),
-              "to",
-              React.createElement(
-                "span",
+              'to',
+              _react2.default.createElement(
+                'span',
                 null,
-                "."
+                '.'
               ),
-              "Me"
+              'Me'
             )
           ),
-          React.createElement(
-            "div",
-            { className: "collapse navbar-collapse", id: "bs-example-navbar-collapse-1" },
-            React.createElement(
-              "ul",
-              { className: "nav navbar-nav" },
-              React.createElement(NavLink, { data: { title: 'Home', path: "/", pathnow: this.props.location.pathname } }),
-              React.createElement(NavLink, { data: { title: 'About', path: "/about", pathnow: this.props.location.pathname } }),
-              React.createElement(NavLink, { data: { title: 'Message List', path: "/message", pathnow: this.props.location.pathname } }),
-              React.createElement(NavLink, { data: { title: 'Write', path: "/message/write", pathnow: this.props.location.pathname } })
+          _react2.default.createElement(
+            'div',
+            { className: 'collapse navbar-collapse', id: 'bs-example-navbar-collapse-1' },
+            _react2.default.createElement(
+              'ul',
+              { className: 'nav navbar-nav' },
+              _react2.default.createElement(NavLink, { data: { title: 'Home', path: "/", pathnow: this.props.location.pathname } }),
+              _react2.default.createElement(NavLink, { data: { title: 'About', path: "/about", pathnow: this.props.location.pathname } }),
+              _react2.default.createElement(NavLink, { data: { title: 'Message List', path: "/message", pathnow: this.props.location.pathname } }),
+              _react2.default.createElement(NavLink, { data: { title: 'Write', path: "/message/write", pathnow: this.props.location.pathname } })
             )
           )
         )
       ),
-      React.createElement(
-        "div",
-        { className: "container" },
+      _react2.default.createElement(
+        'div',
+        { className: 'container' },
         this.props.children
       )
     );
   }
 });
 
-var NavLink = React.createClass({
-  displayName: "NavLink",
+var NavLink = _react2.default.createClass({
+  displayName: 'NavLink',
   render: function render() {
     var data = this.props.data;
-    return React.createElement(
-      "li",
+    return _react2.default.createElement(
+      'li',
       { className: data.path == data.pathnow ? 'active' : '' },
-      React.createElement(
+      _react2.default.createElement(
         _reactRouter.Link,
         { to: data.path },
         data.title
@@ -138,50 +147,50 @@ var About = function (_React$Component) {
   }
 
   _createClass(About, [{
-    key: "render",
+    key: 'render',
     value: function render() {
-      return React.createElement(
-        "div",
-        { className: "about" },
-        React.createElement(
-          "h2",
+      return _react2.default.createElement(
+        'div',
+        { className: 'about' },
+        _react2.default.createElement(
+          'h2',
           null,
-          "About"
+          'About'
         ),
-        React.createElement(
-          "h3",
-          { className: "sub_title" },
-          "React ",
-          React.createElement(
-            "span",
+        _react2.default.createElement(
+          'h3',
+          { className: 'sub_title' },
+          'React ',
+          _react2.default.createElement(
+            'span',
             null,
-            "+"
+            '+'
           ),
-          " Babel ",
-          React.createElement(
-            "span",
+          ' Babel ',
+          _react2.default.createElement(
+            'span',
             null,
-            "+"
+            '+'
           ),
-          " Webpack ",
-          React.createElement(
-            "span",
+          ' Webpack ',
+          _react2.default.createElement(
+            'span',
             null,
-            "+"
+            '+'
           ),
-          " ..."
+          ' ...'
         ),
-        React.createElement(
-          "p",
+        _react2.default.createElement(
+          'p',
           null,
-          "Practice of Learning New Skill."
+          'Practice of Learning New Skill.'
         )
       );
     }
   }]);
 
   return About;
-}(React.Component);
+}(_react2.default.Component);
 
 ;
 
@@ -189,19 +198,21 @@ var About = function (_React$Component) {
 //file of Router couldn't hotupdate
 exports.default =
 // method 2: by react router
-React.createElement(
+_react2.default.createElement(
   _reactRouter.Router,
   { history: _reactRouter.browserHistory },
-  React.createElement(
+  _react2.default.createElement(
     _reactRouter.Route,
-    { path: "/", component: App },
-    React.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
-    React.createElement(_reactRouter.Route, { path: "about", component: About }),
-    React.createElement(
+    { path: '/', component: App },
+    _react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
+    _react2.default.createElement(_reactRouter.Route, { path: 'about', component: About }),
+    _react2.default.createElement(
       _reactRouter.Route,
-      { path: "message", component: _MessageBox2.default },
-      React.createElement(_reactRouter.IndexRoute, { component: _MessageList2.default }),
-      React.createElement(_reactRouter.Route, { path: "write", component: _MessageForm2.default })
-    )
+      { path: 'message', component: _MessageBox2.default },
+      _react2.default.createElement(_reactRouter.IndexRoute, { component: _MessageList2.default }),
+      _react2.default.createElement(_reactRouter.Route, { path: 'write', component: _MessageForm2.default })
+    ),
+    _react2.default.createElement(_reactRouter.Route, { path: '/404', component: _2.default }),
+    _react2.default.createElement(_reactRouter.Redirect, { from: '*', to: '/404' })
   )
 );

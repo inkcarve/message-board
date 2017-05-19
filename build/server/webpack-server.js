@@ -8,20 +8,20 @@ var _webpack = require("webpack");
 
 var _webpack2 = _interopRequireDefault(_webpack);
 
-var _webpack3 = require("../../webpack.config");
+var _devWebpack = require("../../dev-webpack.config");
 
-var _webpack4 = _interopRequireDefault(_webpack3);
+var _devWebpack2 = _interopRequireDefault(_devWebpack);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var server_port = process.env.OPENSHIFT_NODEJS_PORT + 1 || 8080; // Webpack dev server
+var server_port = process.env.OPENSHIFT_NODEJS_PORT + 1 || 8001; // Webpack dev server
 // Ran in parallel with the Express server
 
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
-var server = new _webpackDevServer2.default((0, _webpack2.default)(_webpack4.default), {
+var server = new _webpackDevServer2.default((0, _webpack2.default)(_devWebpack2.default), {
   // webpack-dev-server options
-  publicPath: _webpack4.default.output.publicPath,
+  publicPath: _devWebpack2.default.output.publicPath,
   stats: { colors: true },
   hot: true,
   noInfo: true,

@@ -8,15 +8,15 @@ module.exports = {
     entry: {
         app: [
             './src/client/index.jsx',
-            'webpack-dev-server/client?http://127.0.0.1:8080',
+            'webpack-dev-server/client?http://127.0.0.1:8001',
             'webpack/hot/only-dev-server' // '如果不是only-dev-server是dev-server， HMR 更新失败之后会當自動刷新整个页面
         ],
-        lib: ['jquery', 'bootstrap-sass', "react", "react-dom", "react-router", "redux"]
+        lib: ['jquery', 'bootstrap-sass', "react", "react-dom", "react-router", "redux", "socket.io-client"]
     },
     output: {
         path: __dirname + '/views/',
         filename: 'bundle.js',
-        publicPath: 'http://127.0.0.1:8080/'
+        publicPath: 'http://127.0.0.1:8001/'
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
@@ -63,8 +63,8 @@ module.exports = {
                 test: require.resolve('jquery'),
                 loader: 'expose?jQuery'
             }, {
-                test: require.resolve('jquery'),
-                loader: 'expose?$'
+                test: require.resolve('socket.io-client'),
+                loader: 'expose?io'
             }, {
                 test: /\.eot(\?\S*)?$/,
                 loader: 'url-loader?limit=100000&mimetype=application/vnd.ms-fontobject'
