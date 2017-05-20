@@ -2,55 +2,110 @@ $bootstrap-sass-asset-helper: true;
 @import 'bootstrap-sass/assets/stylesheets/_bootstrap.scss';
 @import 'import.scss';
 
+html {font-size: 62.5%;/*10 ÷ 16 × 100% = 62.5%*/}
+body {font-size: 1.4rem;/*1.4 × 10px = 14px */}
 /* color */
+
 $main_red:#FA5858;
 $main_red_deep:#DF3C3C;
 $main_blue:#2E9AFE;
 $main_blue_deep:#0080FF;
 $p_color:#777;
-
-h1,h2,h3,h4,h5,h6 {color:$main_red;}
-p{color:$p_color;}
-
-/* Logo */
-.navbar-default{
-	.navbar-brand{
-		color:$main_red;
-		&:hover,&:focus{color:$main_red_deep;}
-
-		span{
-		color:$main_blue;
-		&:hover,&:focus{color:$main_blue_deep;}
-		}
-	}
-}
-
-/* home */
-h1{
-	span{
-		color:$main_blue;
-	}
-}
-
-/* about */
-.about{
-	.sub_title{
-		span{
-			color:$main_blue;
-		}
-	}
-}
-
-/* message list */
-.post-block {
-    border: 1px solid #ddd;
-    padding: 26px;
-    h4 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     color: $main_red;
 }
-    p {
-    background: #eee;
-    padding: 16px;
+
+p {
     color: $p_color;
 }
+
+.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
+    background-color: $main-red;
+    border-color: $main-red;
+}
+
+.pagination > li > a:hover, .pagination > li > a:focus, .pagination > li > span:hover, .pagination > li > span:focus {
+    color: $main-red;
+}
+
+.pagination > li > a, .pagination > li > span {
+    color: $main-blue;
+}
+
+
+/* Logo */
+
+.navbar-default {
+    .navbar-brand {
+        color: $main_red;
+        &:hover,
+        &:focus {
+            color: $main_red_deep;
+        }
+        span {
+            color: $main_blue;
+            &:hover,
+            &:focus {
+                color: $main_blue_deep;
+            }
+        }
+    }
+}
+
+
+/* home */
+
+h1 {
+    span {
+        color: $main_blue;
+    }
+}
+
+
+/* about */
+
+.about {
+    .sub_title {
+        span {
+            color: $main_blue;
+        }
+    }
+}
+
+
+/* message list */
+
+.message-list {
+    .post-block {
+        border: 1px solid #ddd;
+        padding: 26px;
+        h4 {
+            color: $main_red;
+        }
+        p {
+            background: #eee;
+            padding: 16px;
+            color: $p_color;
+        }
+    }
+    .edit{
+    width:50px;
+    height:50px;
+    padding:0;
+    line-height:50px;
+    font-size:20px;
+    font-size:2.4rem;
+    	position:fixed;
+    	top:inherit;
+    	bottom:2%;
+    	right:2%;
+    	border-radius:100%;
+    	background:$main_red;
+    	color:#fff;
+    }
 }

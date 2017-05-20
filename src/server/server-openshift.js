@@ -11,7 +11,7 @@ const server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 import DB from "../db/mysql";
 const db = new DB();
 
-db.getDBData((data)=>{console.log('-- connect success --')});
+// db.getDBData((data)=>{console.log('-- connect success --')});
 
 
 app.use(bodyParser.json());
@@ -30,15 +30,17 @@ router.use(function(req, res, next) {
     res.setHeader('Cache-Control', 'no-cache');
     next();
 });
-
+    
 router.get('/getFirstMessage', function(req, res) {
     console.log('--getFirstMessage--');
-    db.getDBData((data) => { res.json(data); });
+    let offset = req.body.page || '0';
+    // db.getDBDataTotal()
+    db.getDBData(offset,(data) => { res.json(data); });
 });
 
 router.get([/^[^\.]+$/], function(req, res) {
 	console.log(req.orangealUrl);
-	res.sendFile(path.resolve(__dirname, '', '../../views/index.html'));
+	res.sendFile(path.resolve(__dirname, '', '../../views/index-two-port.html'));
 });
 
 // send all requests to index.html so browserHistory in React Router works
@@ -92,7 +94,12 @@ serv_io.sockets.on('connection', function(socket) {
     		
     	});
 
-    socket.on('read_message',() => {
-    	db.getDBData((data) => { socket.emit('update_message',data); });
+    socket.on('read_message',(req) => {
+        console.log('-- read_message --');
+        console.log(req);
+        db.getDBData(
+            (data) => { socket.emit('update_message',data); }
+            ,req
+        );
     });
 });

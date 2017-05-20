@@ -34,9 +34,8 @@ var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
 var db = new _mysql2.default();
 
-db.getDBData(function (data) {
-    console.log('-- connect success --');
-});
+// db.getDBData((data)=>{console.log('-- connect success --')});
+
 
 app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({
@@ -57,19 +56,16 @@ router.use(function (req, res, next) {
 
 router.get('/getFirstMessage', function (req, res) {
     console.log('--getFirstMessage--');
-    db.getDBData(function (data) {
+    var offset = req.body.page || '0';
+    // db.getDBDataTotal()
+    db.getDBData(offset, function (data) {
         res.json(data);
     });
 });
 
 router.get([/^[^\.]+$/], function (req, res) {
     console.log(req.orangealUrl);
-    res.sendFile(_path2.default.resolve(__dirname, '', '../../views/index.html'));
-    /*
-    if (req.originalUrl.match('/\.js$/g') || req.originalUrl.search('api') !== -1) {
-    	console.log('js');
-    } else {res.sendFile(path.resolve(__dirname, '', '../../views/index.html'));}
-    */
+    res.sendFile(_path2.default.resolve(__dirname, '', '../../views/index-two-port.html'));
 });
 
 // send all requests to index.html so browserHistory in React Router works
@@ -124,9 +120,11 @@ serv_io.sockets.on('connection', function (socket) {
         });
     });
 
-    socket.on('read_message', function () {
+    socket.on('read_message', function (req) {
+        console.log('-- read_message --');
+        console.log(req);
         db.getDBData(function (data) {
             socket.emit('update_message', data);
-        });
+        }, req);
     });
 });

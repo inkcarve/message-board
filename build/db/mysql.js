@@ -37,7 +37,7 @@ var db = function () {
 
     _createClass(db, [{
         key: 'getDBData',
-        value: function getDBData(cb) {
+        value: function getDBData(cb, req) {
             console.log('--getDBData--');
             pool.getConnection(function (err, connection) {
                 console.log('-- getConnection --');
@@ -45,7 +45,44 @@ var db = function () {
                     console.log('----getConnection error----');
                     console.error(err);
                 }
-                connection.query('SELECT * FROM message limit 25', [], function (err, rows) {
+
+                connection.query('SELECT COUNT(1) FROM message', [], function (err, rows) {
+                    if (err) {
+                        console.error(err);
+                    } else {
+                        console.log(req);
+                        var total = rows[0]['COUNT(1)'];
+                        var activePage = req.activePage;
+                        var offset = (req.activePage - 1) * req.itemsPerPage;
+                        if (total <= offset) {
+                            offset = Math.floor(total / req.itemsPerPage) * req.itemsPerPage;
+                            activePage = Math.ceil(total / req.itemsPerPage);
+                        }
+                        offset = total > offset ? offset : offset - req.itemsPerPage;
+                        connection.query('SELECT * FROM message limit ' + req.itemsPerPage + ' offset ' + offset, [], function (err, rows) {
+                            if (err) {
+                                console.error(err);
+                            } else {
+                                cb({ total: total, data: rows, activePage: activePage });
+                            }
+                            connection.release();
+                        });
+                    }
+                });
+            });
+        }
+    }, {
+        key: 'getDBDataTotal',
+        value: function getDBDataTotal(cb) {
+            console.log('--getDBData Count--');
+            pool.getConnection(function (err, connection) {
+                console.log('-- getConnection --');
+                if (err) {
+                    console.log('----getConnection error----');
+                    console.error(err);
+                }
+
+                connection.query('SELECT COUNT(1) FROM message', [], function (err, rows) {
                     if (err) {
                         console.error(err);
                     } else {

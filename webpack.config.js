@@ -10,7 +10,7 @@ module.exports = {
         bundle: [
             './src/client/index.jsx',
         ],
-        lib: ['jquery', 'bootstrap-sass', "react", "react-dom", "react-router", "redux", "socket.io-client"]
+        lib: ['jquery', 'bootstrap-sass', "react", "react-dom", "react-router", "redux", "socket.io-client", "react-bootstrap"]
     },
     output: {
         path: __dirname + '/views/js/',
@@ -40,7 +40,7 @@ module.exports = {
             output: {
                 comments: false
             },
-            sourceMap: false
+            sourceMap: true
         }),
         new webpack.optimize.CommonsChunkPlugin({name:'lib',filename:'lib.[hash].js',minChunks: Infinity})
         ,

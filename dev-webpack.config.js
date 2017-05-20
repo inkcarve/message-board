@@ -11,7 +11,7 @@ module.exports = {
             'webpack-dev-server/client?http://127.0.0.1:8001',
             'webpack/hot/only-dev-server' // '如果不是only-dev-server是dev-server， HMR 更新失败之后会當自動刷新整个页面
         ],
-        lib: ['jquery', 'bootstrap-sass', "react", "react-dom", "react-router", "redux", "socket.io-client"]
+        lib: ['jquery', 'bootstrap-sass', "react", "react-dom", "react-router", "redux", "socket.io-client", "react-bootstrap"]
     },
     output: {
         path: __dirname + '/views/',
