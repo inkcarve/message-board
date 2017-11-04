@@ -42,7 +42,7 @@ module.exports = {
             },
             sourceMap: true
         }),
-        new webpack.optimize.CommonsChunkPlugin({name:'lib',filename:'lib.[hash].js',minChunks: Infinity})
+        new webpack.optimize.ComponentmmonsChunkPlugin({name:'lib',filename:'lib.[hash].js',minChunks: Infinity})
         ,
         new HtmlWebpackPlugin({
     filename: path.join(__dirname, './views/')+ 'index.html',

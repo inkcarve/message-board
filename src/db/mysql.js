@@ -24,7 +24,7 @@ class db {
                 console.error(err);
             }
 
-            connection.query('SELECT COUNT(1) FROM message', [], function(err, rows) {
+            connection.query('SELECT COUNT(1) FROM message', [], (err, rows) => {
                 if (err) {
                     console.error(err);
                 } else {
@@ -61,7 +61,7 @@ class db {
                 console.error(err);
             }
 
-            connection.query('SELECT COUNT(1) FROM message', [], function(err, rows) {
+            connection.query('SELECT COUNT(1) FROM message', [], (err, rows) => {
                 if (err) {
                     console.error(err);
                 } else {
@@ -73,7 +73,7 @@ class db {
     };
 
     addDBdata(new_data, cb) {
-        pool.getConnection(function(err, connection) {
+        pool.getConnection((err, connection) => {
             console.log('-- getConnection --');
             if (err) {
                 console.log('----getConnection error----');
@@ -85,7 +85,7 @@ class db {
                 if (err) {
                     console.log('----INSERT INTO error----');
                     console.error(err);
-                    return connection.rollback(function() {
+                    return connection.rollback(() => {
                         throw err;
                     });
                 } else {
@@ -97,7 +97,7 @@ class db {
     };
 
     deleteDBdata(data, cb) {
-        pool.getConnection(function(err, connection) {
+        pool.getConnection((err, connection) => {
             console.log('-- getConnection --');
             if (err) {
                 console.log('----getConnection error----');
@@ -105,12 +105,12 @@ class db {
             }
             let id = Date.now();
             console.log(id);
-            connection.query('DELETE FROM message WHERE id=' + data.id, function(err, rows) {
+            connection.query('DELETE FROM message WHERE id=' + data.id, (err, rows) => {
                 if (err) {
                     console.log('----INSERT INTO error----');
                     console.error(err);
                     connection.release();
-                    return connection.rollback(function() {
+                    return connection.rollback(() => {
                         throw err;
                     });
                 } else {

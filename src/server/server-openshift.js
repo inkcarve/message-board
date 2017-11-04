@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import io from "socket.io";
 const app = express();
 const router = express.Router();
-const server_port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+const server_port = process.env.OPENSHIFT_NODEJS_PORT || 6000;
 const server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 // const vendor_port = process.env.OPENSHIFT_NODEJS_PORT || 8000;
 import DB from "../db/mysql";
@@ -40,7 +40,7 @@ router.get('/getFirstMessage', function(req, res) {
 
 router.get([/^[^\.]+$/], function(req, res) {
 	console.log(req.orangealUrl);
-	res.sendFile(path.resolve(__dirname, '', '../../views/index-two-port.html'));
+	res.sendFile(path.resolve(__dirname, '', '../../views/index.html'));
 });
 
 // send all requests to index.html so browserHistory in React Router works

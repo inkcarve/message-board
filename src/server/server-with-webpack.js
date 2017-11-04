@@ -3,7 +3,7 @@ import path from "path";
 import fs from 'fs';
 import bodyParser from "body-parser";
 import io from "socket.io";
-const message_JSON = path.join(__dirname, '../../message.json')
+const message_JSON = path.join(__dirname, '../../message.json');
 const app = express();
 const router = express.Router();
 const server_port = process.env.OPENSHIFT_NODEJS_PORT  || 8080;

@@ -28,7 +28,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var app = (0, _express2.default)();
 var router = _express2.default.Router();
-var server_port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+var server_port = process.env.OPENSHIFT_NODEJS_PORT || 6000;
 var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 // const vendor_port = process.env.OPENSHIFT_NODEJS_PORT || 8000;
 
@@ -65,7 +65,7 @@ router.get('/getFirstMessage', function (req, res) {
 
 router.get([/^[^\.]+$/], function (req, res) {
     console.log(req.orangealUrl);
-    res.sendFile(_path2.default.resolve(__dirname, '', '../../views/index-two-port.html'));
+    res.sendFile(_path2.default.resolve(__dirname, '', '../../views/index.html'));
 });
 
 // send all requests to index.html so browserHistory in React Router works
